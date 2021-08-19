@@ -1,4 +1,4 @@
-package com.example.composebasic.component
+package com.emenjivar.creditcard.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.example.composebasic.R
-import com.example.composebasic.model.CreditCardModel
+import com.emenjivar.creditcard.R
+import com.emenjivar.creditcard.model.CreditCardModel
 
 @Composable
 fun CreditCard(model: CreditCardModel, emptyChar: Char = 'x', backgroundColor: Color = Color.Blue) {

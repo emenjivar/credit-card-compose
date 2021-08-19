@@ -1,4 +1,4 @@
-package com.example.composebasic.model
+package com.emenjivar.creditcard.model
 
 data class CreditCardModel(
     var number: String,

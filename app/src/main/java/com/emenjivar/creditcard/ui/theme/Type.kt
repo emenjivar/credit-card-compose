@@ -1,4 +1,4 @@
-package com.example.composebasic.ui.theme
+package com.emenjivar.creditcard.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.example.composebasic
+package com.emenjivar.creditcard
 
 import org.junit.Test
 

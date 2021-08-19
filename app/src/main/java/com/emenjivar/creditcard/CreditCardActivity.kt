@@ -1,4 +1,4 @@
-package com.example.composebasic
+package com.emenjivar.creditcard
 
 import android.os.Bundle
 import android.util.Log
@@ -19,10 +19,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.composebasic.component.CreditCard
-import com.example.composebasic.component.Dropdown
-import com.example.composebasic.model.CreditCardModel
-import com.example.composebasic.viewmodel.CreditCardViewModel
+import com.emenjivar.creditcard.component.CreditCard
+import com.emenjivar.creditcard.component.Dropdown
+import com.emenjivar.creditcard.model.CreditCardModel
+import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
 
 class CreditCardActivity : ComponentActivity() {
 

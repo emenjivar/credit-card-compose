@@ -1,4 +1,4 @@
-package com.example.composebasic.viewmodel
+package com.emenjivar.creditcard.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

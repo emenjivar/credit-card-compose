@@ -7,7 +7,7 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "com.example.composebasic"
+        applicationId "com.emenjivar.creditcard"
         minSdk 23
         targetSdk 30
         versionCode 1

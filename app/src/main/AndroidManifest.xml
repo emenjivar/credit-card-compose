@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.composebasic">
+    package="com.emenjivar.creditcard">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComposeBasic">
         <activity
-            android:name=".CreditCardActivity"
+            android:name="com.emenjivar.creditcard.CreditCardActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ComposeBasic.NoActionBar">

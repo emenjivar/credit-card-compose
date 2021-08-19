@@ -1,4 +1,4 @@
-package com.example.composebasic
+package com.emenjivar.creditcard
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -28,7 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.composebasic.ui.theme.ComposeBasicTheme
+import com.emenjivar.creditcard.ui.theme.ComposeBasicTheme
 import kotlinx.coroutines.launch
 
 val conversation: List<Message> = List(1000) {
@@ -123,7 +122,11 @@ fun Counter(@DrawableRes icon: Int, count: Int, updateCount: (Int) -> Unit) {
 }
 
 @Composable
-fun CustomTopBar(title: String, subtitle: String, actionIcon: Int = R.drawable.ic_baseline_tag_faces_24) {
+fun CustomTopBar(
+    title: String,
+    subtitle: String,
+    actionIcon: Int = R.drawable.ic_baseline_tag_faces_24
+) {
     TopAppBar(
         title = {
             Column {
@@ -149,7 +152,7 @@ fun Conversation(messages: List<Message>) {
     val counterState = remember { mutableStateOf(0) }
     val scrollState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    
+
     Scaffold(
         topBar = {
             CustomTopBar(
@@ -175,8 +178,8 @@ fun Conversation(messages: List<Message>) {
             }
         }
     ) {
-        
-        
+
+
         LazyColumn(state = scrollState) {
             items(messages) { message ->
                 MessageCard(message)
