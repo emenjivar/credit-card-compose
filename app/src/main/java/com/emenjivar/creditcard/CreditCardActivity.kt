@@ -95,7 +95,7 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
         OutlinedTextField(
             value = viewModel.name,
             onValueChange = {
-                if(it.last().isLetter()) {
+                if(it.last().isLetter() || it.last() == ' ') {
                     viewModel.name = it
                 }
             },
