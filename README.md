@@ -22,3 +22,10 @@ fun CreditCardPreview() {
     )
 }
 ```
+
+## Next steps
+- [ ] Create an standar design for the card
+- [ ] Include back view
+- [ ] Add inputs to fill the view
+- [ ] Include testing
+- [ ] Upload project to centralMaven
