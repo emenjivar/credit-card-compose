@@ -40,6 +40,28 @@ fun CreditCardContainer(
 }
 
 @Composable
+fun CreditCard(
+    model: CreditCardModel,
+    emptyChar: Char = 'x',
+    backgroundColor: Color = Color.Blue,
+    flipped: Boolean = false
+) {
+    if(flipped) {
+        CreditCardBackSide(
+            model = model,
+            emptyChar = emptyChar,
+            backgroundColor = backgroundColor
+        )
+    } else {
+        CreditCardFrontSide(
+            model = model,
+            emptyChar = emptyChar,
+            backgroundColor = backgroundColor
+        )
+    }
+}
+
+@Composable
 fun CreditCardFrontSide(
     model: CreditCardModel,
     emptyChar: Char = 'x',
@@ -271,7 +293,9 @@ fun CreditCardPreview() {
         holderName = "carlos menjivar",
         expiration = "08/22"
     )
-    CreditCardFrontSide(model = creditCard)
+    CreditCard(
+        model = creditCard
+    )
 }
 
 @Preview(name = "Credit card back side")
@@ -284,5 +308,8 @@ fun ReverseCreditCardPreview() {
         cvc = "193",
         bankName = "BancoAgrícola"
     )
-    CreditCardBackSide(creditCard)
+    CreditCard(
+        model = creditCard,
+        flipped = true
+    )
 }

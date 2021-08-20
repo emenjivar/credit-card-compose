@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.emenjivar.creditcard.component.CreditCardFrontSide
+import com.emenjivar.creditcard.component.CreditCard
 import com.emenjivar.creditcard.component.Dropdown
 import com.emenjivar.creditcard.model.CreditCardModel
 import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
@@ -50,7 +50,7 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
             holderName = viewModel.name,
             expiration = viewModel.monthExpiration + "/" + viewModel.yearExpiration
         )
-        CreditCardFrontSide(
+        CreditCard(
             model = model,
             emptyChar = 'X',
             backgroundColor = Color.Black
