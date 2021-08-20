@@ -66,7 +66,7 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
         OutlinedTextField(
             value = viewModel.number,
             onValueChange = {
-                if(it.length <= 16 && it.last().isDigit()) {
+                if(it.isNotEmpty() && it.length <= 16 && it.last().isDigit()) {
                     viewModel.number = it
                 }
             },
@@ -94,7 +94,7 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
         OutlinedTextField(
             value = viewModel.name,
             onValueChange = {
-                if(it.last().isLetter() || it.last() == ' ') {
+                if(it.isNotEmpty() && it.last().isLetter() || it.last() == ' ') {
                     viewModel.name = it
                 }
             },
@@ -103,7 +103,6 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
             }
         )
     }
-
 }
 
 @Preview(showBackground = true)

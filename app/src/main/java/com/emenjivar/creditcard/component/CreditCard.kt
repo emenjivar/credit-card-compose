@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.emenjivar.creditcard.R
 import com.emenjivar.creditcard.model.CreditCardModel
+import com.emenjivar.creditcard.utils.CardNumberParser
 
 @Composable
 fun CreditCard(
@@ -46,8 +47,8 @@ fun CreditCard(
                 iCardEntity
             ) = createRefs()
 
-            val block = deserializeBlock(
-                serial = model.number,
+            val cardNumber = CardNumberParser(
+                number = model.number,
                 emptyChar = emptyChar
             )
 
@@ -78,7 +79,7 @@ fun CreditCard(
                     top.linkTo(iChip.bottom, margin = 2.dp)
                     start.linkTo(iChip.start)
                 },
-                block = block.first
+                block = cardNumber.first
             )
 
             CardNumberBlock(
@@ -86,7 +87,7 @@ fun CreditCard(
                     start.linkTo(lNumberBlockOne.end, margin = 10.dp)
                     centerVerticallyTo(lNumberBlockOne)
                 },
-                block = block.second
+                block = cardNumber.second
             )
 
             CardNumberBlock(
@@ -94,7 +95,7 @@ fun CreditCard(
                     start.linkTo(lNumberBlockTwo.end, margin = 10.dp)
                     centerVerticallyTo(lNumberBlockTwo)
                 },
-                block = block.third
+                block = cardNumber.third
             )
 
             CardNumberBlock(
@@ -102,7 +103,7 @@ fun CreditCard(
                     start.linkTo(lNumberBlockThree.end, margin = 10.dp)
                     centerVerticallyTo(lNumberBlockThree)
                 },
-                block = block.fourth
+                block = cardNumber.fourth
             )
 
             Text(
@@ -162,47 +163,6 @@ fun CardNumberBlock(block: String, modifier: Modifier) {
         color = Color.White,
         text = block
     )
-}
-
-class SerialBlock(val first: String, val second: String, val third: String, val fourth: String)
-
-fun deserializeBlock(serial: String, emptyChar: Char = 'x') = SerialBlock(
-    first = getSerialBlock(
-        serial = serial,
-        blockNumber = 1,
-        emptyChar = emptyChar
-    ),
-    second = getSerialBlock(
-        serial = serial,
-        blockNumber = 2,
-        emptyChar = emptyChar
-    ),
-    third = getSerialBlock(
-        serial = serial,
-        blockNumber = 3,
-        emptyChar = emptyChar
-    ),
-    fourth = getSerialBlock(
-        serial = serial,
-        blockNumber = 4,
-        emptyChar = emptyChar
-    )
-)
-
-fun getSerialBlock(serial: String, blockNumber: Int, emptyChar: Char = '0'): String {
-    val length = serial.length
-    var block = "".padEnd(4, emptyChar)
-    val start = (blockNumber - 1) * 4
-    val end = blockNumber * 4
-
-    if (length in start until end) {
-        block = serial
-            .substring(start, length)
-            .padEnd(4, emptyChar)
-    } else if (serial.length >= start) {
-        block = serial.substring(start, end)
-    }
-    return block
 }
 
 @Preview
