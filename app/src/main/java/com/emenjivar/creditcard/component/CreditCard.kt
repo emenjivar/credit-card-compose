@@ -40,7 +40,7 @@ fun CreditCardContainer(
 }
 
 @Composable
-fun CreditCard(
+fun CreditCardFrontSide(
     model: CreditCardModel,
     emptyChar: Char = 'x',
     backgroundColor: Color = Color.Blue
@@ -172,7 +172,7 @@ fun CreditCard(
 }
 
 @Composable
-fun ReverseCreditCard(
+fun CreditCardBackSide(
     model: CreditCardModel,
     emptyChar: Char = 'x',
     backgroundColor: Color = Color.Blue
@@ -263,7 +263,7 @@ fun CardNumberBlock(block: String, modifier: Modifier) {
     )
 }
 
-@Preview(name = "front credit card")
+@Preview(name = "Credit card front side")
 @Composable
 fun CreditCardPreview() {
     val creditCard = CreditCardModel(
@@ -271,10 +271,10 @@ fun CreditCardPreview() {
         holderName = "carlos menjivar",
         expiration = "08/22"
     )
-    CreditCard(model = creditCard)
+    CreditCardFrontSide(model = creditCard)
 }
 
-@Preview(name = "reverse credit card")
+@Preview(name = "Credit card back side")
 @Composable
 fun ReverseCreditCardPreview() {
     val creditCard = CreditCardModel(
@@ -284,5 +284,5 @@ fun ReverseCreditCardPreview() {
         cvc = "193",
         bankName = "BancoAgrícola"
     )
-    ReverseCreditCard(creditCard)
+    CreditCardBackSide(creditCard)
 }
