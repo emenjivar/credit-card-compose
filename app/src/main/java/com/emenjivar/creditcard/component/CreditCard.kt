@@ -181,7 +181,7 @@ fun ReverseCreditCard(
         backgroundColor = backgroundColor
     ) {
         ConstraintLayout {
-            val (magneticStrip, signature, cvc) = createRefs()
+            val (magneticStrip, signature, cvc, bankName) = createRefs()
             val cardPadding = dimensionResource(id = R.dimen.credit_card_padding)
             val cardNumber = CardNumberParser(
                 number = model.number,
@@ -191,7 +191,7 @@ fun ReverseCreditCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp)
+                    .height(dimensionResource(id = R.dimen.credit_card_magnetic_band_height))
                     .background(Color.Black)
                     .constrainAs(magneticStrip) {
                         top.linkTo(parent.top, margin = cardPadding)
@@ -236,6 +236,17 @@ fun ReverseCreditCard(
                     text = model.cvc
                 )
             }
+
+            Text(
+                modifier = Modifier
+                    .constrainAs(bankName) {
+                        end.linkTo(parent.end, margin = cardPadding)
+                        bottom.linkTo(parent.bottom, margin = cardPadding)
+                    },
+                color = Color.White,
+                fontSize = 12.sp,
+                text = model.bankName
+            )
         }
     }
 }
@@ -270,7 +281,8 @@ fun ReverseCreditCardPreview() {
         number = "00AA11BB22CC4310",
         holderName = "carlos menjivar",
         expiration = "08/22",
-        cvc = "193"
+        cvc = "193",
+        bankName = "BancoAgrícola"
     )
     ReverseCreditCard(creditCard)
 }
