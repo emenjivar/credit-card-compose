@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="credit_card_width">300dp</dimen>
+    <dimen name="credit_card_height">185dp</dimen>
+    <dimen name="credit_card_round_corner">5dp</dimen>
+    <dimen name="credit_card_padding">16dp</dimen>
+    <dimen name="credit_card_space_number_block">10dp</dimen>
+</resources>

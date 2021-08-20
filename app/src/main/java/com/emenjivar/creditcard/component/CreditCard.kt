@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -28,9 +29,9 @@ fun CreditCard(
 ) {
     Card(
         modifier = Modifier
-            .width(300.dp)
-            .height(185.dp),
-        shape = RoundedCornerShape(5.dp),
+            .width(dimensionResource(R.dimen.credit_card_width))
+            .height(dimensionResource(R.dimen.credit_card_height)),
+        shape = RoundedCornerShape(dimensionResource(R.dimen.credit_card_round_corner)),
         backgroundColor = backgroundColor
     ) {
         ConstraintLayout {
@@ -52,10 +53,13 @@ fun CreditCard(
                 emptyChar = emptyChar
             )
 
+            val cardPadding = dimensionResource(R.dimen.credit_card_padding)
+            val spaceCardNumberBlock = dimensionResource(R.dimen.credit_card_space_number_block)
+
             Text(
                 modifier = Modifier.constrainAs(title) {
-                    top.linkTo(parent.top, margin = 16.dp)
-                    end.linkTo(parent.end, margin = 16.dp)
+                    top.linkTo(parent.top, margin = cardPadding)
+                    end.linkTo(parent.end, margin = cardPadding)
                 },
                 fontSize = 25.sp,
                 fontWeight = FontWeight.Bold,
@@ -69,7 +73,7 @@ fun CreditCard(
                 modifier = Modifier
                     .constrainAs(iChip) {
                         top.linkTo(title.bottom, margin = 10.dp)
-                        start.linkTo(parent.start, margin = 16.dp)
+                        start.linkTo(parent.start, margin = cardPadding)
                     }
                     .width(30.dp)
             )
@@ -84,7 +88,7 @@ fun CreditCard(
 
             CardNumberBlock(
                 modifier = Modifier.constrainAs(lNumberBlockTwo) {
-                    start.linkTo(lNumberBlockOne.end, margin = 10.dp)
+                    start.linkTo(lNumberBlockOne.end, margin = spaceCardNumberBlock)
                     centerVerticallyTo(lNumberBlockOne)
                 },
                 block = cardNumber.second
@@ -92,7 +96,7 @@ fun CreditCard(
 
             CardNumberBlock(
                 modifier = Modifier.constrainAs(lNumberBlockThree) {
-                    start.linkTo(lNumberBlockTwo.end, margin = 10.dp)
+                    start.linkTo(lNumberBlockTwo.end, margin = spaceCardNumberBlock)
                     centerVerticallyTo(lNumberBlockTwo)
                 },
                 block = cardNumber.third
@@ -100,7 +104,7 @@ fun CreditCard(
 
             CardNumberBlock(
                 modifier = Modifier.constrainAs(lNumberBlockFour) {
-                    start.linkTo(lNumberBlockThree.end, margin = 10.dp)
+                    start.linkTo(lNumberBlockThree.end, margin = spaceCardNumberBlock)
                     centerVerticallyTo(lNumberBlockThree)
                 },
                 block = cardNumber.fourth
