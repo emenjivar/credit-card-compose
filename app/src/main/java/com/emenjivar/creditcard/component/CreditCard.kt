@@ -1,18 +1,20 @@
 package com.emenjivar.creditcard.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,16 +24,28 @@ import com.emenjivar.creditcard.model.CreditCardModel
 import com.emenjivar.creditcard.utils.CardNumberParser
 
 @Composable
+fun CreditCardContainer(
+    backgroundColor: Color = Color.Blue,
+    content: @Composable () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .width(dimensionResource(id = R.dimen.credit_card_width))
+            .height(dimensionResource(id = R.dimen.credit_card_height)),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.credit_card_round_corner)),
+        backgroundColor = backgroundColor
+    ) {
+        content()
+    }
+}
+
+@Composable
 fun CreditCard(
     model: CreditCardModel,
     emptyChar: Char = 'x',
     backgroundColor: Color = Color.Blue
 ) {
-    Card(
-        modifier = Modifier
-            .width(dimensionResource(R.dimen.credit_card_width))
-            .height(dimensionResource(R.dimen.credit_card_height)),
-        shape = RoundedCornerShape(dimensionResource(R.dimen.credit_card_round_corner)),
+    CreditCardContainer(
         backgroundColor = backgroundColor
     ) {
         ConstraintLayout {
@@ -158,6 +172,75 @@ fun CreditCard(
 }
 
 @Composable
+fun ReverseCreditCard(
+    model: CreditCardModel,
+    emptyChar: Char = 'x',
+    backgroundColor: Color = Color.Blue
+) {
+    CreditCardContainer(
+        backgroundColor = backgroundColor
+    ) {
+        ConstraintLayout {
+            val (magneticStrip, signature, cvc) = createRefs()
+            val cardPadding = dimensionResource(id = R.dimen.credit_card_padding)
+            val cardNumber = CardNumberParser(
+                number = model.number,
+                emptyChar = emptyChar
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp)
+                    .background(Color.Black)
+                    .constrainAs(magneticStrip) {
+                        top.linkTo(parent.top, margin = cardPadding)
+                    }
+            )
+
+            Box(
+                modifier = Modifier
+                    .width(150.dp)
+                    .height(30.dp)
+                    .background(Color.White)
+                    .constrainAs(signature) {
+                        top.linkTo(magneticStrip.bottom, margin = cardPadding)
+                        start.linkTo(parent.start, margin = cardPadding)
+                    }
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center)
+                        .padding(end = 5.dp),
+                    textAlign = TextAlign.End,
+                    text = cardNumber.fourth
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .width(40.dp)
+                    .height(30.dp)
+                    .background(Color.White)
+                    .constrainAs(cvc) {
+                        top.linkTo(signature.top)
+                        start.linkTo(signature.end, margin = cardPadding)
+                    }
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center),
+                    textAlign = TextAlign.Center,
+                    text = model.cvc
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun CardNumberBlock(block: String, modifier: Modifier) {
     Text(
         modifier = modifier,
@@ -169,13 +252,25 @@ fun CardNumberBlock(block: String, modifier: Modifier) {
     )
 }
 
-@Preview
+@Preview(name = "front credit card")
 @Composable
 fun CreditCardPreview() {
     val creditCard = CreditCardModel(
-        number = "00AA11BB22CC4",
+        number = "00AA11BB22CC4310",
         holderName = "carlos menjivar",
         expiration = "08/22"
     )
     CreditCard(model = creditCard)
+}
+
+@Preview(name = "reverse credit card")
+@Composable
+fun ReverseCreditCardPreview() {
+    val creditCard = CreditCardModel(
+        number = "00AA11BB22CC4310",
+        holderName = "carlos menjivar",
+        expiration = "08/22",
+        cvc = "193"
+    )
+    ReverseCreditCard(creditCard)
 }
