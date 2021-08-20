@@ -25,7 +25,6 @@ import com.emenjivar.creditcard.model.CreditCardModel
 import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
 
 class CreditCardActivity : ComponentActivity() {
-
     private val viewModel by viewModels<CreditCardViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +47,7 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
     ) {
         val model = CreditCardModel(
             number = viewModel.number,
-            personName = viewModel.name,
+            holderName = viewModel.name,
             expiration = viewModel.monthExpiration + "/" + viewModel.yearExpiration
         )
         CreditCard(
