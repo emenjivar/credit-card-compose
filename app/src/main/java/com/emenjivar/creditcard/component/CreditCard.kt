@@ -68,7 +68,7 @@ fun CreditCard(
         cvc = cvc
     )
 
-    if(flipped) {
+    if (flipped) {
         CreditCardBackSide(
             model = model,
             emptyChar = emptyChar,
@@ -207,8 +207,8 @@ private fun CreditCardFrontSide(
                         end.linkTo(parent.end, margin = 8.dp)
                         bottom.linkTo(parent.bottom, margin = 8.dp)
                     }
-                    .height(40.dp),
-                painter = painterResource(id = R.drawable.logo_mastercard),
+                    .width(50.dp),
+                painter = painterResource(id = model.logoCardIssuer),
                 contentDescription = null,
             )
         }
@@ -299,7 +299,7 @@ private fun CreditCardBackSide(
                         bottom.linkTo(parent.bottom, margin = 8.dp)
                     }
                     .height(40.dp),
-                painter = painterResource(id = R.drawable.logo_mastercard),
+                painter = painterResource(id = model.logoCardIssuer),
                 contentDescription = null,
             )
         }

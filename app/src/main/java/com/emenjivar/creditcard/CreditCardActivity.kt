@@ -64,6 +64,8 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
             onValueChange = {
                 if (it.isNotEmpty() && it.length <= 16 && it.last().isDigit()) {
                     viewModel.number = it
+                } else {
+                    viewModel.number = ""
                 }
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
