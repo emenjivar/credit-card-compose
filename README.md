@@ -3,16 +3,14 @@ A simple composable component that displays credit/debit card information.
 
 ## Usage
 ```kotlin
-@Preview(name = "Credit card front side")
-@Preview
-fun CreditCardFrontPreview() {
-    val creditCard = CreditCardModel(
-        number = "00AA11BB22CC4310",
-        holderName = "carlos menjivar",
-        expiration = "08/22"
-    )
+@Composable
+private fun CreditCardPreview() {
     CreditCard(
-        model = creditCard
+        bankName = "Banco agrícola",
+        number = "00AA11BB22CC4310",
+        expiration = "08/22",
+        holderName = "carlos menjivar",
+        cvc = "193"
     )
 }
 ```
@@ -23,13 +21,11 @@ fun CreditCardFrontPreview() {
 @Preview(name = "Credit card back side")
 @Composable
 fun CreditCardBackPreview() {
-    val creditCard = CreditCardModel(
-        number = "00AA11BB22CC4310",
-        cvc = "193",
-        bankName = "BancoAgrícola"
-    )
     CreditCard(
-        model = creditCard,
+        number = "00AA11BB22CC4310",
+        holderName = "carlos menjivar",
+        expiration = "08/02",
+        bankName = "Bank name",
         flipped = true
     )
 }
@@ -37,8 +33,9 @@ fun CreditCardBackPreview() {
 ![credit card front empty](./images/credit_card_back_side.png)
 
 ## Next steps
-- [ ] Create an standar design for the card
-- [ ] Include back view
+- [x] Create an standar design for the card
+- [x] Include back view
+- [ ] Identify card entity
 - [ ] Add inputs to fill the view
 - [ ] Include testing
 - [ ] Upload project to centralMaven
