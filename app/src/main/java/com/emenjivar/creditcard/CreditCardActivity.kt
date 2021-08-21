@@ -15,13 +15,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.emenjivar.creditcard.component.CreditCard
 import com.emenjivar.creditcard.component.Dropdown
-import com.emenjivar.creditcard.model.CreditCardModel
 import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
 
 class CreditCardActivity : ComponentActivity() {
@@ -45,15 +43,13 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
             .fillMaxWidth()
             .wrapContentWidth(Alignment.CenterHorizontally)
     ) {
-        val model = CreditCardModel(
-            number = viewModel.number,
-            holderName = viewModel.name,
-            expiration = viewModel.monthExpiration + "/" + viewModel.yearExpiration
-        )
         CreditCard(
-            model = model,
-            emptyChar = 'X',
-            backgroundColor = Color.Black
+            bankName = "BancoAgrícola",
+            number = viewModel.number,
+            expiration = viewModel.monthExpiration + "/" + viewModel.yearExpiration,
+            holderName = viewModel.name,
+            cvc = "000",
+            emptyChar = 'X'
         )
         CreditCardInputs(viewModel = viewModel)
     }

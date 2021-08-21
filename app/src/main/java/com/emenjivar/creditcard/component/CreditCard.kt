@@ -39,13 +39,35 @@ fun CreditCardContainer(
     }
 }
 
+/**
+ * @param bankName displays on front and back side of card
+ * @param number 16-digits card number, front side shows complete number, back side shows last 4 digits
+ * @param expiration should has MM/YY format, shown on front side
+ * @param holderName first and lastname of card's owner, shows on the front side
+ * @param cvc security code, shown on the back side
+ * @param emptyChar character used to complete the card number, when string length is less than 16
+ * @param backgroundColor color of the card
+ * @param flipped true shows back side, false shows front side
+ */
 @Composable
 fun CreditCard(
-    model: CreditCardModel,
+    bankName: String,
+    number: String,
+    expiration: String,
+    holderName: String,
+    cvc: String,
     emptyChar: Char = 'x',
     backgroundColor: Color = Color.Blue,
     flipped: Boolean = false
 ) {
+    val model = CreditCardModel(
+        bankName = bankName,
+        number = number,
+        expiration = expiration,
+        holderName = holderName,
+        cvc = cvc
+    )
+
     if(flipped) {
         CreditCardBackSide(
             model = model,
@@ -62,7 +84,7 @@ fun CreditCard(
 }
 
 @Composable
-fun CreditCardFrontSide(
+private fun CreditCardFrontSide(
     model: CreditCardModel,
     emptyChar: Char = 'x',
     backgroundColor: Color = Color.Blue
@@ -194,7 +216,7 @@ fun CreditCardFrontSide(
 }
 
 @Composable
-fun CreditCardBackSide(
+private fun CreditCardBackSide(
     model: CreditCardModel,
     emptyChar: Char = 'x',
     backgroundColor: Color = Color.Blue
@@ -274,7 +296,7 @@ fun CreditCardBackSide(
 }
 
 @Composable
-fun CardNumberBlock(block: String, modifier: Modifier) {
+private fun CardNumberBlock(block: String, modifier: Modifier) {
     Text(
         modifier = modifier,
         fontWeight = FontWeight.Light,
@@ -287,29 +309,25 @@ fun CardNumberBlock(block: String, modifier: Modifier) {
 
 @Preview(name = "Credit card front side")
 @Composable
-fun CreditCardPreview() {
-    val creditCard = CreditCardModel(
-        number = "00AA11BB22CC4310",
-        holderName = "carlos menjivar",
-        expiration = "08/22"
-    )
+private fun CreditCardPreview() {
     CreditCard(
-        model = creditCard
+        bankName = "Banco agrícola",
+        number = "00AA11BB22CC4310",
+        expiration = "08/22",
+        holderName = "carlos menjivar",
+        cvc = "193"
     )
 }
 
 @Preview(name = "Credit card back side")
 @Composable
-fun ReverseCreditCardPreview() {
-    val creditCard = CreditCardModel(
-        number = "00AA11BB22CC4310",
-        holderName = "carlos menjivar",
-        expiration = "08/22",
-        cvc = "193",
-        bankName = "BancoAgrícola"
-    )
+private fun ReverseCreditCardPreview() {
     CreditCard(
-        model = creditCard,
+        bankName = "Banco agrícola",
+        number = "00AA11BB22CC4310",
+        expiration = "08/22",
+        holderName = "carlos menjivar",
+        cvc = "193",
         flipped = true
     )
 }
