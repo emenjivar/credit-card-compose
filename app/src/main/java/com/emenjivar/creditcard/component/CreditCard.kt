@@ -225,7 +225,7 @@ private fun CreditCardBackSide(
         backgroundColor = backgroundColor
     ) {
         ConstraintLayout {
-            val (magneticStrip, signature, cvc, bankName) = createRefs()
+            val (magneticStrip, signature, cvc, bankName, cardEntity) = createRefs()
             val cardPadding = dimensionResource(id = R.dimen.credit_card_padding)
             val cardNumber = CardNumberParser(
                 number = model.number,
@@ -284,12 +284,23 @@ private fun CreditCardBackSide(
             Text(
                 modifier = Modifier
                     .constrainAs(bankName) {
-                        end.linkTo(parent.end, margin = cardPadding)
+                        start.linkTo(parent.start, margin = cardPadding)
                         bottom.linkTo(parent.bottom, margin = cardPadding)
                     },
                 color = Color.White,
-                fontSize = 12.sp,
+                fontSize = 14.sp,
                 text = model.bankName
+            )
+
+            Image(
+                modifier = Modifier
+                    .constrainAs(cardEntity) {
+                        end.linkTo(parent.end, margin = 8.dp)
+                        bottom.linkTo(parent.bottom, margin = 8.dp)
+                    }
+                    .height(40.dp),
+                painter = painterResource(id = R.drawable.logo_mastercard),
+                contentDescription = null,
             )
         }
     }
