@@ -61,12 +61,12 @@ class CardIssuerFinderTest {
     @Test
     fun `test when card number has the minimum required american express format`() {
         // Given the following list of numbers
-        val thirtyThree = "33"
+        val thirtyThree = "33" // Out of range
         val thirtyFour = "34"
         val thirtyFive = "35"
         val thirtySix = "36"
         val thirtySeven = "37"
-        val thirtyEight = "38"
+        val thirtyEight = "38" // Out of range
 
         // Then verify the outputs are AMERICAN_EXPRESS
         assertEquals(CardIssuer.AMERICAN_EXPRESS, finder.detect(thirtyFour))
