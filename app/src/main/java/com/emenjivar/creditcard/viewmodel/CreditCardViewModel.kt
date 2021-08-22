@@ -8,6 +8,6 @@ import androidx.lifecycle.ViewModel
 class CreditCardViewModel : ViewModel() {
     var name by mutableStateOf("")
     var number by mutableStateOf("")
-    var monthExpiration by mutableStateOf("00")
-    var yearExpiration by mutableStateOf("00")
+    var expiration by mutableStateOf("") // mm/yy format
+    var cvc by mutableStateOf("")
 }

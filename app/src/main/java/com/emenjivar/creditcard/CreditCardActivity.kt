@@ -1,25 +1,22 @@
 package com.emenjivar.creditcard
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.emenjivar.creditcard.component.CreditCard
-import com.emenjivar.creditcard.component.Dropdown
 import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
 
 class CreditCardActivity : ComponentActivity() {
@@ -37,20 +34,21 @@ class CreditCardActivity : ComponentActivity() {
 
 @Composable
 fun LayoutCreditCard(viewModel: CreditCardViewModel) {
-    Column(
-        modifier = Modifier
-            .padding(top = 28.dp)
-            .fillMaxWidth()
-            .wrapContentWidth(Alignment.CenterHorizontally)
-    ) {
-        CreditCard(
-            bankName = "BancoAgrícola",
-            number = viewModel.number,
-            expiration = viewModel.monthExpiration + "/" + viewModel.yearExpiration,
-            holderName = viewModel.name,
-            cvc = "000",
-            emptyChar = 'X'
-        )
+    Column {
+        Column(
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+        ) {
+            CreditCard(
+                bankName = "BancoAgrícola",
+                number = viewModel.number,
+                expiration = viewModel.expiration,
+                holderName = viewModel.name,
+                cvc = viewModel.cvc,
+                flipped = viewModel.cvc.isNotEmpty(),
+                emptyChar = 'X'
+            )
+        }
+
         CreditCardInputs(viewModel = viewModel)
     }
 
@@ -58,13 +56,16 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
 
 @Composable
 fun CreditCardInputs(viewModel: CreditCardViewModel) {
-    Column {
-        OutlinedTextField(
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
             value = viewModel.number,
             onValueChange = {
                 if (it.isNotEmpty() && it.length <= 16 && it.last().isDigit()) {
                     viewModel.number = it
-                } else {
+                } else if(it.isEmpty()) {
                     viewModel.number = ""
                 }
             },
@@ -73,33 +74,55 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
                 Text(text = "Number of card")
             }
         )
-        Dropdown(
-            label = "Month",
-            data = listOf("01", "02", "03", "04", "05", "06"),
-            onSelect = {
-                Log.d("CreditCardActivity", "month selected: $it")
-                viewModel.monthExpiration = it
-            }
-        )
-        Dropdown(
-            label = "Year",
-            data = listOf("21", "22", "23", "24", "25"),
-            onSelect = {
-                Log.d("CreditCardActivity", "year selected: $it")
-                viewModel.yearExpiration = it
-            }
-        )
-        OutlinedTextField(
+
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
             value = viewModel.name,
             onValueChange = {
-                if (it.isNotEmpty() && it.last().isLetter() || it.last() == ' ') {
+                if (it.isNotEmpty() && (it.last().isLetter() || it.last() == ' ')) {
                     viewModel.name = it
+                } else if(it.isEmpty()) {
+                    viewModel.number = ""
                 }
             },
             label = {
                 Text("Name of card")
             }
         )
+
+        Row {
+            TextField(
+                modifier = Modifier.weight(0.5f),
+                value = viewModel.expiration,
+                onValueChange = {
+                    if(it.isNotEmpty() && it.last().isDigit() && it.length <= 5) {
+                        viewModel.expiration = it
+                    } else if(it.isEmpty()) {
+                        viewModel.expiration = ""
+                    }
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                label = {
+                    Text("Expiration")
+                }
+            )
+            TextField(
+                modifier = Modifier.weight(0.5f),
+                value = viewModel.cvc,
+                onValueChange = {
+                    if(it.isNotEmpty() && it.last().isDigit() && it.length <= 3) {
+                        viewModel.cvc = it
+                    } else if(it.isEmpty()) {
+                        viewModel.cvc = ""
+                    }
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                label = {
+                    Text("Security code")
+                }
+            )
+        }
+
     }
 }
 
@@ -109,8 +132,7 @@ fun MyCreditCardPreview() {
     val mockViewModel = CreditCardViewModel()
     mockViewModel.name = ""
     mockViewModel.number = ""
-    mockViewModel.monthExpiration = "01"
-    mockViewModel.yearExpiration = "22"
+    mockViewModel.expiration = "01/22"
 
     LayoutCreditCard(
         viewModel = mockViewModel
