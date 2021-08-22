@@ -6,15 +6,13 @@ import org.junit.Test
 
 class CardIssuerFinderTest {
 
-    private val finder = CardIssuerFinder()
-
     @Test
     fun `test when card number has the minimum required visa format`() {
         // Given a minimum card number following visa constraints
         val number = "4"
 
         // Then verify the output is VISA
-        assertEquals(CardIssuer.VISA, finder.detect(number))
+        assertEquals(CardIssuer.VISA, CardIssuerFinder.detect(number))
     }
 
     @Test
@@ -23,7 +21,7 @@ class CardIssuerFinderTest {
         val number = "4200220033004400"
 
         // Then verify the output is VISA
-        assertEquals(CardIssuer.VISA, finder.detect(number))
+        assertEquals(CardIssuer.VISA, CardIssuerFinder.detect(number))
     }
 
     @Test
@@ -38,15 +36,15 @@ class CardIssuerFinderTest {
         val fiftySix = "56" // Out of range
 
         // Then verify the outputs are MASTERCARD
-        assertEquals(CardIssuer.MASTERCARD, finder.detect(fiftyOne))
-        assertEquals(CardIssuer.MASTERCARD, finder.detect(fiftyTwo))
-        assertEquals(CardIssuer.MASTERCARD, finder.detect(fiftyThree))
-        assertEquals(CardIssuer.MASTERCARD, finder.detect(fiftyFour))
-        assertEquals(CardIssuer.MASTERCARD, finder.detect(fiftyFive))
+        assertEquals(CardIssuer.MASTERCARD, CardIssuerFinder.detect(fiftyOne))
+        assertEquals(CardIssuer.MASTERCARD, CardIssuerFinder.detect(fiftyTwo))
+        assertEquals(CardIssuer.MASTERCARD, CardIssuerFinder.detect(fiftyThree))
+        assertEquals(CardIssuer.MASTERCARD, CardIssuerFinder.detect(fiftyFour))
+        assertEquals(CardIssuer.MASTERCARD, CardIssuerFinder.detect(fiftyFive))
 
         // Then verify also a bad input, which is OTHER
-        assertEquals(CardIssuer.OTHER, finder.detect(fifty))
-        assertEquals(CardIssuer.OTHER, finder.detect(fiftySix))
+        assertEquals(CardIssuer.OTHER, CardIssuerFinder.detect(fifty))
+        assertEquals(CardIssuer.OTHER, CardIssuerFinder.detect(fiftySix))
     }
 
     @Test
@@ -55,7 +53,7 @@ class CardIssuerFinderTest {
         val number = "5228791099000012"
 
         // Then verify the output is VISA
-        assertEquals(CardIssuer.MASTERCARD, finder.detect(number))
+        assertEquals(CardIssuer.MASTERCARD, CardIssuerFinder.detect(number))
     }
 
     @Test
@@ -69,14 +67,14 @@ class CardIssuerFinderTest {
         val thirtyEight = "38" // Out of range
 
         // Then verify the outputs are AMERICAN_EXPRESS
-        assertEquals(CardIssuer.AMERICAN_EXPRESS, finder.detect(thirtyFour))
-        assertEquals(CardIssuer.AMERICAN_EXPRESS, finder.detect(thirtyFive))
-        assertEquals(CardIssuer.AMERICAN_EXPRESS, finder.detect(thirtySix))
-        assertEquals(CardIssuer.AMERICAN_EXPRESS, finder.detect(thirtySeven))
+        assertEquals(CardIssuer.AMERICAN_EXPRESS, CardIssuerFinder.detect(thirtyFour))
+        assertEquals(CardIssuer.AMERICAN_EXPRESS, CardIssuerFinder.detect(thirtyFive))
+        assertEquals(CardIssuer.AMERICAN_EXPRESS, CardIssuerFinder.detect(thirtySix))
+        assertEquals(CardIssuer.AMERICAN_EXPRESS, CardIssuerFinder.detect(thirtySeven))
 
         // Then verify also a bad input, which is OTHER
-        assertEquals(CardIssuer.OTHER, finder.detect(thirtyThree))
-        assertEquals(CardIssuer.OTHER, finder.detect(thirtyEight))
+        assertEquals(CardIssuer.OTHER, CardIssuerFinder.detect(thirtyThree))
+        assertEquals(CardIssuer.OTHER, CardIssuerFinder.detect(thirtyEight))
     }
 
     @Test
@@ -85,6 +83,6 @@ class CardIssuerFinderTest {
         val number = "375987654321001"
 
         // Then verify the output is VISA
-        assertEquals(CardIssuer.AMERICAN_EXPRESS, finder.detect(number))
+        assertEquals(CardIssuer.AMERICAN_EXPRESS, CardIssuerFinder.detect(number))
     }
 }
