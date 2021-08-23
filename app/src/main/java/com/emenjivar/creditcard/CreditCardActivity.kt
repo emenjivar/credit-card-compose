@@ -1,6 +1,7 @@
 package com.emenjivar.creditcard
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -8,11 +9,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,7 +49,7 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
                 expiration = viewModel.expiration,
                 holderName = viewModel.name,
                 cvc = viewModel.cvc,
-                flipped = viewModel.cvc.isNotEmpty(),
+                flipped = viewModel.flipped,
                 emptyChar = 'X'
             )
         }
@@ -61,7 +65,11 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
         modifier = Modifier.padding(16.dp)
     ) {
         TextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusChanged { state ->
+                    if(state.isFocused) viewModel.flipped = false
+                },
             value = viewModel.number,
             onValueChange = {
                 CardInputValidator.parseNumber(it)?.let { number ->
@@ -75,7 +83,11 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
         )
 
         TextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusChanged { state ->
+                    if(state.isFocused) viewModel.flipped = false
+                },
             value = viewModel.name,
             onValueChange = {
                 CardInputValidator.parseHolderName(it)?.let { name ->
@@ -90,6 +102,10 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
         Row {
             TextField(
                 value = viewModel.expiration,
+                modifier = Modifier
+                    .onFocusEvent { state ->
+                        if(state.isFocused) viewModel.flipped = false
+                    },
                 onValueChange = {
                     CardInputValidator.parseExpiration(it, viewModel.expiration)
                         ?.let { expiration ->
@@ -102,7 +118,11 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
                 }
             )
             TextField(
-                modifier = Modifier.weight(0.5f),
+                modifier = Modifier
+                    .weight(0.5f)
+                    .onFocusEvent { state ->
+                        if(state.isFocused) viewModel.flipped = true
+                    },
                 value = viewModel.cvc,
                 onValueChange = {
                     CardInputValidator.parseCVC(it)?.let { cvc ->

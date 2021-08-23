@@ -10,4 +10,5 @@ class CreditCardViewModel : ViewModel() {
     var number by mutableStateOf("")
     var expiration by mutableStateOf("") // mm/yy format
     var cvc by mutableStateOf("")
+    var flipped by mutableStateOf(false)
 }
