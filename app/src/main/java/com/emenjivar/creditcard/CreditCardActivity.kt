@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.emenjivar.creditcard.component.CreditCard
+import com.emenjivar.creditcard.utils.CardInputValidator
 import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
 
 class CreditCardActivity : ComponentActivity() {
@@ -63,10 +64,8 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
             modifier = Modifier.fillMaxWidth(),
             value = viewModel.number,
             onValueChange = {
-                if (it.isNotEmpty() && it.length <= 16 && it.last().isDigit()) {
-                    viewModel.number = it
-                } else if(it.isEmpty()) {
-                    viewModel.number = ""
+                CardInputValidator.parseNumber(it)?.let { number ->
+                    viewModel.number = number
                 }
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -79,10 +78,8 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
             modifier = Modifier.fillMaxWidth(),
             value = viewModel.name,
             onValueChange = {
-                if (it.isNotEmpty() && (it.last().isLetter() || it.last() == ' ')) {
-                    viewModel.name = it
-                } else if(it.isEmpty()) {
-                    viewModel.number = ""
+                CardInputValidator.parseHolderName(it)?.let { name ->
+                    viewModel.name = name
                 }
             },
             label = {
@@ -92,14 +89,12 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
 
         Row {
             TextField(
-                modifier = Modifier.weight(0.5f),
                 value = viewModel.expiration,
                 onValueChange = {
-                    if(it.isNotEmpty() && it.last().isDigit() && it.length <= 5) {
-                        viewModel.expiration = it
-                    } else if(it.isEmpty()) {
-                        viewModel.expiration = ""
-                    }
+                    CardInputValidator.parseExpiration(it, viewModel.expiration)
+                        ?.let { expiration ->
+                            viewModel.expiration = expiration
+                        }
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 label = {
@@ -110,10 +105,8 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
                 modifier = Modifier.weight(0.5f),
                 value = viewModel.cvc,
                 onValueChange = {
-                    if(it.isNotEmpty() && it.last().isDigit() && it.length <= 3) {
-                        viewModel.cvc = it
-                    } else if(it.isEmpty()) {
-                        viewModel.cvc = ""
+                    CardInputValidator.parseCVC(it)?.let { cvc ->
+                        viewModel.cvc = cvc
                     }
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
