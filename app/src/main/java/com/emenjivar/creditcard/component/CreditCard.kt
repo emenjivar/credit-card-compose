@@ -207,6 +207,7 @@ private fun CreditCardFrontSide(
 @Composable
 private fun CreditCardBackSide(
     model: CreditCardModel,
+    showSecurityCode: Boolean = false,
     emptyChar: Char = 'x',
     backgroundColor: Color = Color.Blue
 ) {
@@ -266,7 +267,7 @@ private fun CreditCardBackSide(
                         .fillMaxWidth()
                         .align(Alignment.Center),
                     textAlign = TextAlign.Center,
-                    text = model.cvc
+                    text = if(showSecurityCode) model.cvc else "*".repeat(model.cvc.length)
                 )
             }
 
@@ -326,6 +327,7 @@ fun CreditCard(
     cvc: String,
     emptyChar: Char = 'x',
     backgroundColor: Color = Color.Blue,
+    showSecurityCode: Boolean = false,
     flipped: Boolean = false
 ) {
     val model = CreditCardModel(

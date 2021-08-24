@@ -39,7 +39,8 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
                 holderName = viewModel.name,
                 cvc = viewModel.cvc,
                 flipped = viewModel.flipped,
-                emptyChar = 'X'
+                emptyChar = 'X',
+                showSecurityCode = false
             )
 
             Spacer(modifier = Modifier.size(16.dp))
