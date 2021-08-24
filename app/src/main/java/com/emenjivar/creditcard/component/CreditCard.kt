@@ -6,80 +6,69 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Placeable
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.emenjivar.creditcard.R
 import com.emenjivar.creditcard.model.CreditCardModel
 import com.emenjivar.creditcard.utils.CardNumberParser
 
+/**
+ * Provides rectangular size to the card
+ * This percent is calculated using the real size of a credit card: 85.6mm x 53.98mm
+ * Height layout is 63.06% of width
+ */
+private fun Modifier.dynamicCardHeight() = this.then(
+    layout { measurable, constraints ->
+        var placeable: Placeable
+
+        measurable.measure(constraints).apply {
+            placeable = measurable.measure(constraints.copy(
+                minWidth = width,
+                maxWidth = width,
+                minHeight = (width * 0.6306).toInt(),
+                maxHeight = (width * 0.6306).toInt()
+            ))
+        }
+
+        layout(
+            width = placeable.width,
+            height = placeable.height
+        ) {
+            placeable.place(
+                x = 0,
+                y = 0,
+                zIndex = 0f
+            )
+        }
+    }
+)
+
+
 @Composable
-fun CreditCardContainer(
+private fun CreditCardContainer(
     backgroundColor: Color = Color.Blue,
     content: @Composable () -> Unit
 ) {
     Card(
         modifier = Modifier
-            .width(dimensionResource(id = R.dimen.credit_card_width))
-            .height(dimensionResource(id = R.dimen.credit_card_height)),
+            .fillMaxWidth()
+            .dynamicCardHeight(),
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.credit_card_round_corner)),
         backgroundColor = backgroundColor
     ) {
         content()
-    }
-}
-
-/**
- * @param bankName displays on front and back side of card
- * @param number 16-digits card number, front side shows complete number, back side shows last 4 digits
- * @param expiration should has MM/YY format, shown on front side
- * @param holderName first and lastname of card's owner, shows on the front side
- * @param cvc security code, shown on the back side
- * @param emptyChar character used to complete the card number, when string length is less than 16
- * @param backgroundColor color of the card
- * @param flipped true shows back side, false shows front side
- */
-@Composable
-fun CreditCard(
-    bankName: String,
-    number: String,
-    expiration: String,
-    holderName: String,
-    cvc: String,
-    emptyChar: Char = 'x',
-    backgroundColor: Color = Color.Blue,
-    flipped: Boolean = false
-) {
-    val model = CreditCardModel(
-        bankName = bankName,
-        number = number,
-        expiration = expiration,
-        holderName = holderName,
-        cvc = cvc
-    )
-
-    if (flipped) {
-        CreditCardBackSide(
-            model = model,
-            emptyChar = emptyChar,
-            backgroundColor = backgroundColor
-        )
-    } else {
-        CreditCardFrontSide(
-            model = model,
-            emptyChar = emptyChar,
-            backgroundColor = backgroundColor
-        )
     }
 }
 
@@ -316,6 +305,50 @@ private fun CardNumberBlock(block: String, modifier: Modifier) {
         color = Color.White,
         text = block
     )
+}
+
+/**
+ * @param bankName displays on front and back side of card
+ * @param number 16-digits card number, front side shows complete number, back side shows last 4 digits
+ * @param expiration should has MM/YY format, shown on front side
+ * @param holderName first and lastname of card's owner, shows on the front side
+ * @param cvc security code, shown on the back side
+ * @param emptyChar character used to complete the card number, when string length is less than 16
+ * @param backgroundColor color of the card
+ * @param flipped true shows back side, false shows front side
+ */
+@Composable
+fun CreditCard(
+    bankName: String,
+    number: String,
+    expiration: String,
+    holderName: String,
+    cvc: String,
+    emptyChar: Char = 'x',
+    backgroundColor: Color = Color.Blue,
+    flipped: Boolean = false
+) {
+    val model = CreditCardModel(
+        bankName = bankName,
+        number = number,
+        expiration = expiration,
+        holderName = holderName,
+        cvc = cvc
+    )
+
+    if (flipped) {
+        CreditCardBackSide(
+            model = model,
+            emptyChar = emptyChar,
+            backgroundColor = backgroundColor
+        )
+    } else {
+        CreditCardFrontSide(
+            model = model,
+            emptyChar = emptyChar,
+            backgroundColor = backgroundColor
+        )
+    }
 }
 
 @Preview(name = "Credit card front side")

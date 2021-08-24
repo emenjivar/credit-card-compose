@@ -31,7 +31,7 @@ class CreditCardActivity : ComponentActivity() {
 fun LayoutCreditCard(viewModel: CreditCardViewModel) {
     Column {
         Column(
-            modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
         ) {
             CreditCard(
                 bankName = "BancoAgrícola",

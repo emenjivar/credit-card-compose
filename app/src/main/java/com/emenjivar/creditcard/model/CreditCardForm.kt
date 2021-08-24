@@ -87,7 +87,7 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
                 modifier = Modifier
                     .weight(0.5f)
                     .onFocusEvent { state ->
-                        if(state.isFocused) viewModel.flipped = true
+                        if (state.isFocused) viewModel.flipped = true
                     }
                     .focusRequester(focusCVC),
                 value = viewModel.cvc,
@@ -115,7 +115,7 @@ private fun FocusableTextField(
 ) {
     val keyboardOptions = KeyboardOptions(
         keyboardType = keyboardType,
-        imeAction = if(nextFocus != null) ImeAction.Next else ImeAction.Done
+        imeAction = if (nextFocus != null) ImeAction.Next else ImeAction.Done
     )
 
     TextField(
