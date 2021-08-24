@@ -26,9 +26,7 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
     val focusExpiration = FocusRequester()
     val focusCVC = FocusRequester()
 
-    Column(
-        modifier = Modifier.padding(16.dp)
-    ) {
+    Column {
         FocusableTextField(
             modifier = Modifier
                 .fillMaxWidth()

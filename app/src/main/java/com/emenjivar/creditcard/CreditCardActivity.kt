@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,9 +41,13 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
                 flipped = viewModel.flipped,
                 emptyChar = 'X'
             )
+
+            Spacer(modifier = Modifier.size(16.dp))
+            
+            CreditCardInputs(viewModel = viewModel)
         }
 
-        CreditCardInputs(viewModel = viewModel)
+
     }
 
 }
