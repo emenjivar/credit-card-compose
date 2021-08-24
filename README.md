@@ -1,41 +1,72 @@
 # Credit card preview
-A simple composable component that displays credit/debit card information.
+A simple composable component that display a credit card preview and provide a form to enter de information, including validations fo fields.
 
-## Usage
+This component support (at the moment) visa and creditcard on the preview.
+
+## How to use?
+Initialize in the activity the viewModel provided by the project
+
 ```kotlin
-@Composable
-private fun CreditCardPreview() {
-    CreditCard(
-        bankName = "Banco agrícola",
-        number = "00AA11BB22CC4310",
-        expiration = "08/22",
-        holderName = "carlos menjivar",
-        cvc = "193"
-    )
+class Activity : ComponentActivity() {
+    private val viewModel by viewModels<CreditCardViewModel>()
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            // This function is declarated in the next step
+            LayoutCreditCard(
+                viewModel = viewModel
+            )
+        }
+    }
 }
 ```
 
-![credit card front empty](./images/credit_card_front_side.png)
-
+Then create the composable function, using the viewmodel as a parameter
 ```kotlin
-@Preview(name = "Credit card back side")
 @Composable
-fun CreditCardBackPreview() {
-    CreditCard(
-        number = "00AA11BB22CC4310",
-        holderName = "carlos menjivar",
-        expiration = "08/02",
-        bankName = "Bank name",
-        flipped = true
-    )
+fun LayoutCreditCard(viewModel: CreditCardViewModel) {
+    Column {
+        Column(
+            modifier = Modifier
+                .padding(
+                    start = 16.dp, 
+                    top = 16.dp, 
+                    end = 16.dp
+                )
+        ) {
+            CreditCard(
+                bankName = "BancoAgrícola",
+                number = viewModel.number,
+                expiration = viewModel.expiration,
+                holderName = viewModel.name,
+                cvc = viewModel.cvc,
+                flipped = viewModel.flipped,
+                emptyChar = 'X'
+            )
+
+            Spacer(modifier = Modifier.size(16.dp))
+
+            CreditCardInputs(viewModel = viewModel)
+        }
+    }
 }
+
 ```
-![credit card front empty](./images/credit_card_back_side.png)
+
+![credit card front empty](./images/card_input.gif)
+
+The credit card preview and form are separated components, so you can use them independently.
+
+## Contribute
+I will be more than happy to receive your PR, I am open to suggestions or modifications.
+
+As for commits, I use [gitmoji](https://gitmoji.dev/) to keep the history small and consistent. 
 
 ## Next steps
 - [x] Create an standar design for the card
 - [x] Include back view
-- [ ] Identify card entity
-- [ ] Add inputs to fill the view
+- [X] Identify card entity
+- [X] Add inputs to fill the view
 - [ ] Include testing
 - [ ] Upload project to centralMaven

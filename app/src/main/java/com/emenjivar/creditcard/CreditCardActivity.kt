@@ -43,13 +43,10 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
             )
 
             Spacer(modifier = Modifier.size(16.dp))
-            
+
             CreditCardInputs(viewModel = viewModel)
         }
-
-
     }
-
 }
 
 @Preview(showBackground = true)
