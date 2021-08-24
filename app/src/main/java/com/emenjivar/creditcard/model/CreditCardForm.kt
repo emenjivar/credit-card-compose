@@ -66,6 +66,7 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
         Row {
             FocusableTextField(
                 modifier = Modifier
+                    .weight(0.5f)
                     .onFocusEvent { state ->
                         if (state.isFocused) viewModel.flipped = false
                     }
