@@ -1,13 +1,14 @@
 # Credit card preview
-A simple composable component that display a credit card preview and provide a form to enter de information, including validations fo fields.
+A simple composable component that displays a **credit card preview** and provide a **form** to enter de information, including field validations.
 
-This component support (at the moment) visa and creditcard on the preview.
+This component supports (*at the moment*) visa and mastercard on the preview.
 
 ## How to use?
-Initialize in the activity the viewModel provided by the project
+Initialize the viewModel provided by the project
 
 ```kotlin
 class Activity : ComponentActivity() {
+    // Initialize here
     private val viewModel by viewModels<CreditCardViewModel>()
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +57,7 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
 
 ![credit card front empty](./images/card_input.gif)
 
-The credit card preview and form are separated components, so you can use them independently.
+The **credit card preview** and **form** are separated components, so you can use them independently.
 
 ## Contribute
 I will be more than happy to receive your PR, I am open to suggestions or modifications.
