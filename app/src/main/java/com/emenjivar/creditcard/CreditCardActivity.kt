@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.emenjivar.creditcard.component.CreditCard
-import com.emenjivar.creditcard.model.CreditCardInputs
+import com.emenjivar.creditcard.component.CreditCardInputs
 import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
 
 class CreditCardActivity : ComponentActivity() {
