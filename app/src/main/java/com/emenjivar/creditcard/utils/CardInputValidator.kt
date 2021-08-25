@@ -48,6 +48,6 @@ class CardInputValidator {
             expiration.isNotEmpty() && expiration.last().isDigit() && expiration.length <= 5
 
         private fun parseExpirationWhenDeleteSlash(inputExpiration: String, viewModelExpiration: String) =
-            inputExpiration.isNotEmpty() && inputExpiration.last() == '/' && viewModelExpiration.length > inputExpiration.length
+            inputExpiration.isNotEmpty() && inputExpiration.last() == '/' && inputExpiration.length == 2 && viewModelExpiration.length > inputExpiration.length
     }
 }
