@@ -297,7 +297,6 @@ private fun CardNumberBlock(block: String, modifier: Modifier) {
 }
 
 /**
- * @param bankName displays on front and back side of card
  * @param number 16-digits card number, front side shows complete number, back side shows last 4 digits
  * @param expiration should has MM/YY format, shown on front side
  * @param holderName first and lastname of card's owner, shows on the front side
@@ -308,7 +307,6 @@ private fun CardNumberBlock(block: String, modifier: Modifier) {
  */
 @Composable
 fun CreditCard(
-    bankName: String,
     number: String,
     expiration: String,
     holderName: String,
@@ -319,7 +317,6 @@ fun CreditCard(
     flipped: Boolean = false
 ) {
     val model = CreditCardModel(
-        bankName = bankName,
         number = number,
         expiration = expiration,
         holderName = holderName,
@@ -349,7 +346,6 @@ private fun CreditCardPreview() {
         modifier = Modifier.width(500.dp)
     ) {
         CreditCard(
-            bankName = "Banco agrícola",
             number = "00AA11BB22CC4310",
             expiration = "0225",
             holderName = "carlos menjivar",
@@ -365,7 +361,6 @@ private fun ReverseCreditCardPreview() {
         modifier = Modifier.width(500.dp)
     ) {
         CreditCard(
-            bankName = "Banco agrícola",
             number = "00AA11BB22CC4310",
             expiration = "0822",
             holderName = "carlos menjivar",

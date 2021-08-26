@@ -4,7 +4,6 @@ import com.emenjivar.creditcard.R
 import com.emenjivar.creditcard.utils.CardIssuerFinder
 
 data class CreditCardModel(
-    var bankName: String = "Bank name",
     var number: String = "",
     var expiration: String = "0000", // First two digits = month, last two digits = year
     var holderName: String = "",

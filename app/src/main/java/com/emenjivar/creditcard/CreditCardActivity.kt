@@ -33,7 +33,6 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
             modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
         ) {
             CreditCard(
-                bankName = "BancoAgrícola",
                 number = viewModel.number,
                 expiration = viewModel.expiration,
                 holderName = viewModel.name,
