@@ -13,10 +13,11 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.*
 import com.emenjivar.creditcard.utils.CardInputValidator
+import com.emenjivar.creditcard.utils.InputTransformation
 import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
+
 
 @Composable
 fun CreditCardInputs(viewModel: CreditCardViewModel) {
@@ -69,11 +70,9 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
                     .focusRequester(focusExpiration),
                 value = viewModel.expiration,
                 label = "Expiration",
+                visualTransformation = InputTransformation(),
                 onValueChange = {
-                    CardInputValidator.parseExpiration(it, viewModel.expiration)
-                        ?.let { expiration ->
-                            viewModel.expiration = expiration
-                        }
+                    viewModel.expiration = if (it.length >= 5) it.substring(0, 4) else it
                 },
                 keyboardType = KeyboardType.Number,
                 nextFocus = focusCVC
@@ -105,6 +104,7 @@ private fun FocusableTextField(
     modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit = {},
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardType: KeyboardType = KeyboardType.Text,
     nextFocus: FocusRequester? = null,
     label: String
@@ -117,6 +117,7 @@ private fun FocusableTextField(
     TextField(
         value = value,
         onValueChange = { onValueChange(it) },
+        visualTransformation = visualTransformation,
         modifier = modifier,
         label = { Text(text = label) },
         keyboardOptions = keyboardOptions,
