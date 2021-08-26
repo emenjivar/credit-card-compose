@@ -38,6 +38,9 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
             visualTransformation = InputTransformation(FieldType.CARD_NUMBER),
             onValueChange = {
                 viewModel.number = if(viewModel.number.length >= 16) viewModel.number.substring(0..15) else it
+
+                // When value is completed, request focus of next field
+                if(viewModel.number.length >= 16) focusHolderName.requestFocus()
             },
             keyboardType = KeyboardType.Number,
             nextFocus = focusHolderName
@@ -72,7 +75,10 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
                 label = "Expiration",
                 visualTransformation = InputTransformation(FieldType.EXPIRATION),
                 onValueChange = {
-                    viewModel.expiration = if (it.length >= 5) it.substring(0, 4) else it
+                    viewModel.expiration = if (it.length >= 4) it.substring(0..3) else it
+
+                    // When value is completed, request focus of next field
+                    if(viewModel.expiration.length >= 4) focusCVC.requestFocus()
                 },
                 keyboardType = KeyboardType.Number,
                 nextFocus = focusCVC
