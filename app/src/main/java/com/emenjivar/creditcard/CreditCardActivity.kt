@@ -58,7 +58,11 @@ fun MyCreditCardPreview() {
     mockViewModel.number = ""
     mockViewModel.expiration = "01/22"
 
-    LayoutCreditCard(
-        viewModel = mockViewModel
-    )
+    Column(
+        modifier = Modifier.width(500.dp)
+    ) {
+        LayoutCreditCard(
+            viewModel = mockViewModel
+        )
+    }
 }

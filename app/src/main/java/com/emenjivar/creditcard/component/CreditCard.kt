@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,7 +18,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.*
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.emenjivar.creditcard.R
 import com.emenjivar.creditcard.model.CreditCardModel
@@ -34,12 +35,14 @@ private fun Modifier.dynamicCardHeight() = this.then(
         var placeable: Placeable
 
         measurable.measure(constraints).apply {
-            placeable = measurable.measure(constraints.copy(
-                minWidth = width,
-                maxWidth = width,
-                minHeight = (width * 0.6306).toInt(),
-                maxHeight = (width * 0.6306).toInt()
-            ))
+            placeable = measurable.measure(
+                constraints.copy(
+                    minWidth = width,
+                    maxWidth = width,
+                    minHeight = (width * 0.6306).toInt(),
+                    maxHeight = (width * 0.6306).toInt()
+                )
+            )
         }
 
         layout(
@@ -267,7 +270,7 @@ private fun CreditCardBackSide(
                         .fillMaxWidth()
                         .align(Alignment.Center),
                     textAlign = TextAlign.Center,
-                    text = if(showSecurityCode) model.cvc else "*".repeat(model.cvc.length)
+                    text = if (showSecurityCode) model.cvc else "*".repeat(model.cvc.length)
                 )
             }
 
@@ -342,7 +345,8 @@ fun CreditCard(
         CreditCardBackSide(
             model = model,
             emptyChar = emptyChar,
-            backgroundColor = backgroundColor
+            backgroundColor = backgroundColor,
+            showSecurityCode = showSecurityCode
         )
     } else {
         CreditCardFrontSide(
@@ -356,24 +360,32 @@ fun CreditCard(
 @Preview(name = "Credit card front side")
 @Composable
 private fun CreditCardPreview() {
-    CreditCard(
-        bankName = "Banco agrícola",
-        number = "00AA11BB22CC4310",
-        expiration = "08/22",
-        holderName = "carlos menjivar",
-        cvc = "193"
-    )
+    Column(
+        modifier = Modifier.width(500.dp)
+    ) {
+        CreditCard(
+            bankName = "Banco agrícola",
+            number = "00AA11BB22CC4310",
+            expiration = "08/22",
+            holderName = "carlos menjivar",
+            cvc = "193"
+        )
+    }
 }
 
 @Preview(name = "Credit card back side")
 @Composable
 private fun ReverseCreditCardPreview() {
-    CreditCard(
-        bankName = "Banco agrícola",
-        number = "00AA11BB22CC4310",
-        expiration = "08/22",
-        holderName = "carlos menjivar",
-        cvc = "193",
-        flipped = true
-    )
+    Column(
+        modifier = Modifier.width(500.dp)
+    ) {
+        CreditCard(
+            bankName = "Banco agrícola",
+            number = "00AA11BB22CC4310",
+            expiration = "08/22",
+            holderName = "carlos menjivar",
+            cvc = "193",
+            flipped = true
+        )
+    }
 }
