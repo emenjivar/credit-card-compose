@@ -81,7 +81,7 @@ private fun CustomTextFieldDeleteIcon(
         ) {
             Icon(
                 modifier = Modifier
-                    .padding(4.dp),
+                    .padding(5.dp),
                 painter = painterResource(id = R.drawable.ic_baseline_close_24),
                 contentDescription = null
             )
