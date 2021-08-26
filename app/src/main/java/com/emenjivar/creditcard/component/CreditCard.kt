@@ -124,10 +124,10 @@ private fun CreditCardFrontSide(
                 contentDescription = null,
                 modifier = Modifier
                     .constrainAs(iChip) {
-                        top.linkTo(parent.top, margin = 60.dp)
+                        top.linkTo(parent.top, margin = 50.dp)
                         start.linkTo(parent.start, margin = cardPadding)
                     }
-                    .width(40.dp)
+                    .width(50.dp)
             )
 
             CardNumberBlock(
