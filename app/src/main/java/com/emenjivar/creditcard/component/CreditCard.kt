@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.dimensionResource
@@ -85,14 +86,13 @@ private fun CreditCardFrontSide(
     ) {
         ConstraintLayout {
             val (
-                title,
                 iChip,
                 lNumberBlockOne,
                 lNumberBlockTwo,
                 lNumberBlockThree,
                 lNumberBlockFour,
-                lGoodThru,
                 lExpiration,
+                lExpirationDate,
                 lHolderName,
                 iCardEntity
             ) = createRefs()
@@ -105,26 +105,29 @@ private fun CreditCardFrontSide(
             val cardPadding = dimensionResource(R.dimen.credit_card_padding)
             val spaceCardNumberBlock = dimensionResource(R.dimen.credit_card_space_number_block)
 
-            Text(
-                modifier = Modifier.constrainAs(title) {
-                    top.linkTo(parent.top, margin = cardPadding)
-                    end.linkTo(parent.end, margin = cardPadding)
-                },
-                fontSize = 25.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                text = model.bankName
-            )
+            model.logoCardIssuer?.let { safeLogoIssuer ->
+                Image(
+                    modifier = Modifier
+                        .constrainAs(iCardEntity) {
+                            top.linkTo(parent.top, margin = cardPadding)
+                            end.linkTo(parent.end, margin = cardPadding)
+                        }
+                        .width(60.dp),
+                    painter = painterResource(id = safeLogoIssuer),
+                    contentScale = ContentScale.Fit,
+                    contentDescription = null,
+                )
+            }
 
             Image(
                 painter = painterResource(id = R.drawable.chip_credit_card),
                 contentDescription = null,
                 modifier = Modifier
                     .constrainAs(iChip) {
-                        top.linkTo(title.bottom, margin = 10.dp)
+                        top.linkTo(parent.top, margin = 60.dp)
                         start.linkTo(parent.start, margin = cardPadding)
                     }
-                    .width(30.dp)
+                    .width(40.dp)
             )
 
             CardNumberBlock(
@@ -160,47 +163,38 @@ private fun CreditCardFrontSide(
             )
 
             Text(
-                modifier = Modifier.constrainAs(lGoodThru) {
-                    end.linkTo(lExpiration.start, margin = 3.dp)
-                    bottom.linkTo(lExpiration.bottom)
+                modifier = Modifier.constrainAs(lHolderName) {
+                    start.linkTo(parent.start, margin = cardPadding)
+                    bottom.linkTo(parent.bottom, margin = 30.dp)
                 },
-                fontSize = 6.sp,
+                fontWeight = FontWeight.Light,
+                fontFamily = FontFamily.Monospace,
+                fontSize = 12.sp,
                 color = Color.White,
-                text = "GOOD\nTHRU"
+                text = if(model.holderName.isEmpty()) "YOUR NAME" else model.holderName.uppercase()
             )
 
             Text(
                 modifier = Modifier.constrainAs(lExpiration) {
-                    top.linkTo(lNumberBlockOne.bottom, margin = 5.dp)
-                    centerHorizontallyTo(parent)
+                    end.linkTo(parent.end, margin = 60.dp)
+                    centerVerticallyTo(lHolderName)
                 },
-                fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Monospace,
                 fontSize = 12.sp,
                 color = Color.White,
-                text = model.formattedExpiration
-            )
-            Text(
-                modifier = Modifier.constrainAs(lHolderName) {
-                    top.linkTo(lExpiration.bottom, margin = 5.dp)
-                    start.linkTo(lNumberBlockOne.start)
-                },
-                fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Monospace,
-                fontSize = 12.sp,
-                color = Color.White,
-                text = model.holderName.uppercase()
+                text = "EXP"
             )
 
-            Image(
-                modifier = Modifier
-                    .constrainAs(iCardEntity) {
-                        end.linkTo(parent.end, margin = 8.dp)
-                        bottom.linkTo(parent.bottom, margin = 8.dp)
-                    }
-                    .width(50.dp),
-                painter = painterResource(id = model.logoCardIssuer),
-                contentDescription = null,
+            Text(
+                modifier = Modifier.constrainAs(lExpirationDate) {
+                    start.linkTo(lExpiration.end, margin = 10.dp)
+                    end.linkTo(parent.end, margin = cardPadding)
+                    centerVerticallyTo(lExpiration)
+                },
+                fontWeight = FontWeight.Light,
+                fontFamily = FontFamily.Monospace,
+                fontSize = 12.sp,
+                color = Color.White,
+                text = if(model.formattedExpiration.isEmpty()) "00/00" else model.formattedExpiration
             )
         }
     }
@@ -217,7 +211,7 @@ private fun CreditCardBackSide(
         backgroundColor = backgroundColor
     ) {
         ConstraintLayout {
-            val (magneticStrip, signature, cvc, bankName, cardEntity) = createRefs()
+            val (magneticStrip, signature, cvc, cardEntity) = createRefs()
             val cardPadding = dimensionResource(id = R.dimen.credit_card_padding)
             val cardNumber = CardNumberParser(
                 number = model.number,
@@ -273,27 +267,19 @@ private fun CreditCardBackSide(
                 )
             }
 
-            Text(
-                modifier = Modifier
-                    .constrainAs(bankName) {
-                        start.linkTo(parent.start, margin = cardPadding)
-                        bottom.linkTo(parent.bottom, margin = cardPadding)
-                    },
-                color = Color.White,
-                fontSize = 14.sp,
-                text = model.bankName
-            )
-
-            Image(
-                modifier = Modifier
-                    .constrainAs(cardEntity) {
-                        end.linkTo(parent.end, margin = 8.dp)
-                        bottom.linkTo(parent.bottom, margin = 8.dp)
-                    }
-                    .height(40.dp),
-                painter = painterResource(id = model.logoCardIssuer),
-                contentDescription = null,
-            )
+            model.logoCardIssuer?.let { safeLogoIssuer ->
+                Image(
+                    modifier = Modifier
+                        .constrainAs(cardEntity) {
+                            end.linkTo(parent.end, margin = 8.dp)
+                            bottom.linkTo(parent.bottom, margin = 8.dp)
+                        }
+                        .width(60.dp),
+                    contentScale = ContentScale.Fit,
+                    painter = painterResource(id = safeLogoIssuer),
+                    contentDescription = null,
+                )
+            }
         }
     }
 }
@@ -304,7 +290,7 @@ private fun CardNumberBlock(block: String, modifier: Modifier) {
         modifier = modifier,
         fontWeight = FontWeight.Light,
         fontFamily = FontFamily.Monospace,
-        fontSize = 22.sp,
+        fontSize = 25.sp,
         color = Color.White,
         text = block
     )

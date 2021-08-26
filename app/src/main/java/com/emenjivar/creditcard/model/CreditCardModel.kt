@@ -15,7 +15,7 @@ data class CreditCardModel(
         CardIssuer.VISA -> R.drawable.logo_visa
         CardIssuer.MASTERCARD -> R.drawable.logo_mastercard
         CardIssuer.AMERICAN_EXPRESS -> R.drawable.ic_baseline_credit_card_24
-        CardIssuer.OTHER -> R.drawable.ic_baseline_credit_card_24
+        CardIssuer.OTHER -> null
     }
 
     /**

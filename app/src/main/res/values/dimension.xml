@@ -5,5 +5,5 @@
     <dimen name="credit_card_round_corner">5dp</dimen>
     <dimen name="credit_card_padding">16dp</dimen>
     <dimen name="credit_card_space_number_block">10dp</dimen>
-    <dimen name="credit_card_magnetic_band_height">40dp</dimen>
+    <dimen name="credit_card_magnetic_band_height">50dp</dimen>
 </resources>
