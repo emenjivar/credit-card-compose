@@ -21,20 +21,6 @@ class CardInputValidator {
             else -> null
         }
 
-        fun parseExpiration(inputExpiration: String, viewModelExpiration: String): String? = when {
-            // Before slash (00/) has been typed
-            parseExpirationBeforeSlash(inputExpiration) ->
-                if(inputExpiration.length == 2) {
-                    "$inputExpiration/"
-                } else {
-                    inputExpiration
-                }
-            // When slash is deleted from expiration value
-            parseExpirationWhenDeleteSlash(inputExpiration, viewModelExpiration) -> inputExpiration.substring(0, 2)
-            inputExpiration.isEmpty() -> ""
-            else -> null
-        }
-
         private fun checkNumber(number: String): Boolean =
             number.isNotEmpty() && number.length <= 16 && number.last().isDigit()
 
@@ -43,11 +29,5 @@ class CardInputValidator {
 
         private fun checkCVC(cvc: String): Boolean =
             cvc.isNotEmpty() && cvc.last().isDigit() && cvc.length <= 3
-
-        private fun parseExpirationBeforeSlash(expiration: String) =
-            expiration.isNotEmpty() && expiration.last().isDigit() && expiration.length <= 5
-
-        private fun parseExpirationWhenDeleteSlash(inputExpiration: String, viewModelExpiration: String) =
-            inputExpiration.isNotEmpty() && inputExpiration.last() == '/' && inputExpiration.length == 2 && viewModelExpiration.length > inputExpiration.length
     }
 }

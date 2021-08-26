@@ -179,7 +179,7 @@ private fun CreditCardFrontSide(
                 fontFamily = FontFamily.Monospace,
                 fontSize = 12.sp,
                 color = Color.White,
-                text = model.expiration
+                text = model.formattedExpiration
             )
             Text(
                 modifier = Modifier.constrainAs(lHolderName) {
@@ -366,7 +366,7 @@ private fun CreditCardPreview() {
         CreditCard(
             bankName = "Banco agrícola",
             number = "00AA11BB22CC4310",
-            expiration = "08/22",
+            expiration = "0225",
             holderName = "carlos menjivar",
             cvc = "193"
         )
@@ -382,7 +382,7 @@ private fun ReverseCreditCardPreview() {
         CreditCard(
             bankName = "Banco agrícola",
             number = "00AA11BB22CC4310",
-            expiration = "08/22",
+            expiration = "0822",
             holderName = "carlos menjivar",
             cvc = "193",
             flipped = true

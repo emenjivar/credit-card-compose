@@ -56,7 +56,7 @@ fun MyCreditCardPreview() {
     val mockViewModel = CreditCardViewModel()
     mockViewModel.name = ""
     mockViewModel.number = ""
-    mockViewModel.expiration = "01/22"
+    mockViewModel.expiration = "0228"
 
     Column(
         modifier = Modifier.width(500.dp)
