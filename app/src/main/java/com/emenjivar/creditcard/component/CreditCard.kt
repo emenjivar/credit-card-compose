@@ -58,7 +58,6 @@ private fun Modifier.dynamicCardHeight() = this.then(
     }
 )
 
-
 @Composable
 private fun CreditCardContainer(
     backgroundColor: Color = Color.Blue,

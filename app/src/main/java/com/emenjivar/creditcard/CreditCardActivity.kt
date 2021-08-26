@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.emenjivar.creditcard.component.CreditCard
-import com.emenjivar.creditcard.component.CreditCardInputs
+import com.emenjivar.creditcard.component.CreditCardForm
 import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
 
 class CreditCardActivity : ComponentActivity() {
@@ -45,7 +45,7 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
 
             Spacer(modifier = Modifier.size(16.dp))
 
-            CreditCardInputs(viewModel = viewModel)
+            CreditCardForm(viewModel = viewModel)
         }
     }
 }
