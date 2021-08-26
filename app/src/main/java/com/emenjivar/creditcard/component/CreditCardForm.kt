@@ -1,24 +1,37 @@
 package com.emenjivar.creditcard.component
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
-import androidx.compose.ui.text.input.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
+import com.emenjivar.creditcard.R
 import com.emenjivar.creditcard.utils.CardInputValidator
 import com.emenjivar.creditcard.utils.FieldType
 import com.emenjivar.creditcard.utils.InputTransformation
 import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
-
 
 @Composable
 fun CreditCardInputs(viewModel: CreditCardViewModel) {
@@ -37,10 +50,16 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
             label = "Number of card",
             visualTransformation = InputTransformation(FieldType.CARD_NUMBER),
             onValueChange = {
-                viewModel.number = if(viewModel.number.length >= 16) viewModel.number.substring(0..15) else it
+                viewModel.number =
+                    if (viewModel.number.length >= 16) viewModel.number.substring(0..15) else it
 
                 // When value is completed, request focus of next field
-                if(viewModel.number.length >= 16) focusHolderName.requestFocus()
+                if (viewModel.number.length >= 16) focusHolderName.requestFocus()
+            },
+            trailingIcon = {
+                FocusableTextFieldDeleteIcon(value = viewModel.number) {
+                    viewModel.number = ""
+                }
             },
             keyboardType = KeyboardType.Number,
             nextFocus = focusHolderName
@@ -58,6 +77,11 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
             onValueChange = {
                 CardInputValidator.parseHolderName(it)?.let { name ->
                     viewModel.name = name
+                }
+            },
+            trailingIcon = {
+                FocusableTextFieldDeleteIcon(value = viewModel.name) {
+                    viewModel.name = ""
                 }
             },
             nextFocus = focusExpiration
@@ -78,7 +102,12 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
                     viewModel.expiration = if (it.length >= 4) it.substring(0..3) else it
 
                     // When value is completed, request focus of next field
-                    if(viewModel.expiration.length >= 4) focusCVC.requestFocus()
+                    if (viewModel.expiration.length >= 4) focusCVC.requestFocus()
+                },
+                trailingIcon = {
+                    FocusableTextFieldDeleteIcon(value = viewModel.expiration) {
+                        viewModel.expiration = ""
+                    }
                 },
                 keyboardType = KeyboardType.Number,
                 nextFocus = focusCVC
@@ -92,10 +121,15 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
                     }
                     .focusRequester(focusCVC),
                 value = viewModel.cvc,
-                label = "Security code",
+                label = "CVC",
                 onValueChange = {
                     CardInputValidator.parseCVC(it)?.let { cvc ->
                         viewModel.cvc = cvc
+                    }
+                },
+                trailingIcon = {
+                    FocusableTextFieldDeleteIcon(value = viewModel.cvc) {
+                        viewModel.cvc = ""
                     }
                 },
                 keyboardType = KeyboardType.Number
@@ -113,7 +147,8 @@ private fun FocusableTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardType: KeyboardType = KeyboardType.Text,
     nextFocus: FocusRequester? = null,
-    label: String
+    label: String,
+    trailingIcon: @Composable (() -> Unit)? = null
 ) {
     val keyboardOptions = KeyboardOptions(
         keyboardType = keyboardType,
@@ -126,6 +161,7 @@ private fun FocusableTextField(
         visualTransformation = visualTransformation,
         modifier = modifier,
         label = { Text(text = label) },
+        trailingIcon = trailingIcon,
         keyboardOptions = keyboardOptions,
         keyboardActions = KeyboardActions(
             onNext = {
@@ -133,4 +169,28 @@ private fun FocusableTextField(
             }
         )
     )
+}
+
+@Composable
+private fun FocusableTextFieldDeleteIcon(
+    value: String,
+    onClick: () -> Unit
+) {
+    if (value.isNotBlank()) {
+        Box(
+            modifier = Modifier
+                .height(30.dp)
+                .padding(2.dp)
+                .clip(CircleShape)
+                .background(Color.LightGray)
+                .clickable { onClick() }
+        ) {
+            Icon(
+                modifier = Modifier
+                    .padding(4.dp),
+                painter = painterResource(id = R.drawable.ic_baseline_close_24),
+                contentDescription = null
+            )
+        }
+    }
 }
