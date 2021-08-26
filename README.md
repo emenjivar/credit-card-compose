@@ -1,7 +1,10 @@
 # Credit card preview
-A simple composable component that displays a **credit card preview** and provide a **form** to enter de information, including field validations.
+A simple composable component that displays a **credit card preview** and provides a **form** to enter the information, including field validations.
 
 This component supports (*at the moment*) visa and mastercard on the preview.
+
+## Preview
+![credit card front empty](./images/card_input.gif)
 
 ## How to use?
 Initialize the viewModel provided by the project
@@ -37,7 +40,6 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
                 )
         ) {
             CreditCard(
-                bankName = "BancoAgrícola",
                 number = viewModel.number,
                 expiration = viewModel.expiration,
                 holderName = viewModel.name,
@@ -56,7 +58,6 @@ fun LayoutCreditCard(viewModel: CreditCardViewModel) {
 
 ```
 
-![credit card front empty](./images/card_input.gif)
 
 The **credit card preview** and **form** are separated components, so you can use them independently.
 
