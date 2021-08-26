@@ -15,6 +15,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.text.input.*
 import com.emenjivar.creditcard.utils.CardInputValidator
+import com.emenjivar.creditcard.utils.FieldType
 import com.emenjivar.creditcard.utils.InputTransformation
 import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
 
@@ -30,14 +31,13 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .onFocusChanged { state ->
-                    if (state.isFocused) viewModel.flipped
+                    if (state.isFocused) viewModel.flipped = false
                 },
             value = viewModel.number,
             label = "Number of card",
+            visualTransformation = InputTransformation(FieldType.CARD_NUMBER),
             onValueChange = {
-                CardInputValidator.parseNumber(it)?.let { number ->
-                    viewModel.number = number
-                }
+                viewModel.number = if(viewModel.number.length >= 16) viewModel.number.substring(0..15) else it
             },
             keyboardType = KeyboardType.Number,
             nextFocus = focusHolderName
@@ -70,7 +70,7 @@ fun CreditCardInputs(viewModel: CreditCardViewModel) {
                     .focusRequester(focusExpiration),
                 value = viewModel.expiration,
                 label = "Expiration",
-                visualTransformation = InputTransformation(),
+                visualTransformation = InputTransformation(FieldType.EXPIRATION),
                 onValueChange = {
                     viewModel.expiration = if (it.length >= 5) it.substring(0, 4) else it
                 },
