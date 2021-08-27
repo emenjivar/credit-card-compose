@@ -30,32 +30,28 @@ Then create the composable function, using the viewmodel as a parameter
 ```kotlin
 @Composable
 fun LayoutCreditCard(viewModel: CreditCardViewModel) {
-    Column {
-        Column(
-            modifier = Modifier
-                .padding(
-                    start = 16.dp, 
-                    top = 16.dp, 
-                    end = 16.dp
-                )
-        ) {
-            CreditCard(
-                number = viewModel.number,
-                expiration = viewModel.expiration,
-                holderName = viewModel.name,
-                cvc = viewModel.cvc,
-                flipped = viewModel.flipped,
-                emptyChar = 'X',
-                showSecurityCode = false
-            )
+    Column(
+        modifier = Modifier.padding(
+            start = 16.dp, 
+            top = 16.dp, 
+            end = 16.dp
+        )
+    ) {
+        CreditCard(
+            number = viewModel.number,
+            expiration = viewModel.expiration,
+            holderName = viewModel.name,
+            cvc = viewModel.cvc,
+            flipped = viewModel.flipped,
+            emptyChar = 'X',
+            showSecurityCode = false
+        )
 
-            Spacer(modifier = Modifier.size(16.dp))
+        Spacer(modifier = Modifier.size(16.dp))
 
-            CreditCardInputs(viewModel = viewModel)
-        }
+        CreditCardForm(viewModel = viewModel)
     }
 }
-
 ```
 
 
