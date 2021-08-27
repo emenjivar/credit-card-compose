@@ -112,7 +112,7 @@ class CreditCardTest {
 
         composeTestRule
             .onNodeWithTag("iCardEntity")
-            .assertIsDisplayed()
+            .assertExists()
     }
 
     @Test
