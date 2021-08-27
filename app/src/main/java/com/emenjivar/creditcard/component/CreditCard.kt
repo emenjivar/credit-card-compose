@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -87,10 +88,7 @@ private fun CreditCardFrontSide(
         ConstraintLayout {
             val (
                 iChip,
-                lNumberBlockOne,
-                lNumberBlockTwo,
-                lNumberBlockThree,
-                lNumberBlockFour,
+                lCardNumber,
                 lExpiration,
                 lExpirationDate,
                 lHolderName,
@@ -103,7 +101,6 @@ private fun CreditCardFrontSide(
             )
 
             val cardPadding = dimensionResource(R.dimen.credit_card_padding)
-            val spaceCardNumberBlock = dimensionResource(R.dimen.credit_card_space_number_block)
 
             model.logoCardIssuer?.let { safeLogoIssuer ->
                 Image(
@@ -112,7 +109,8 @@ private fun CreditCardFrontSide(
                             top.linkTo(parent.top, margin = cardPadding)
                             end.linkTo(parent.end, margin = cardPadding)
                         }
-                        .width(60.dp),
+                        .width(60.dp)
+                        .testTag("iCardEntity"),
                     painter = painterResource(id = safeLogoIssuer),
                     contentScale = ContentScale.Fit,
                     contentDescription = null,
@@ -131,42 +129,22 @@ private fun CreditCardFrontSide(
             )
 
             CardNumberBlock(
-                modifier = Modifier.constrainAs(lNumberBlockOne) {
-                    top.linkTo(iChip.bottom, margin = 2.dp)
-                    start.linkTo(iChip.start)
-                },
-                block = cardNumber.first
-            )
-
-            CardNumberBlock(
-                modifier = Modifier.constrainAs(lNumberBlockTwo) {
-                    start.linkTo(lNumberBlockOne.end, margin = spaceCardNumberBlock)
-                    centerVerticallyTo(lNumberBlockOne)
-                },
-                block = cardNumber.second
-            )
-
-            CardNumberBlock(
-                modifier = Modifier.constrainAs(lNumberBlockThree) {
-                    start.linkTo(lNumberBlockTwo.end, margin = spaceCardNumberBlock)
-                    centerVerticallyTo(lNumberBlockTwo)
-                },
-                block = cardNumber.third
-            )
-
-            CardNumberBlock(
-                modifier = Modifier.constrainAs(lNumberBlockFour) {
-                    start.linkTo(lNumberBlockThree.end, margin = spaceCardNumberBlock)
-                    centerVerticallyTo(lNumberBlockThree)
-                },
-                block = cardNumber.fourth
+                modifier = Modifier
+                    .constrainAs(lCardNumber) {
+                        top.linkTo(iChip.bottom, margin = 2.dp)
+                        start.linkTo(iChip.start)
+                    }
+                    .testTag("lCardNumber"),
+                cardNumber = cardNumber
             )
 
             Text(
-                modifier = Modifier.constrainAs(lHolderName) {
-                    start.linkTo(parent.start, margin = cardPadding)
-                    bottom.linkTo(parent.bottom, margin = 30.dp)
-                },
+                modifier = Modifier
+                    .constrainAs(lHolderName) {
+                        start.linkTo(parent.start, margin = cardPadding)
+                        bottom.linkTo(parent.bottom, margin = 30.dp)
+                    }
+                    .testTag("lHolderName"),
                 fontWeight = FontWeight.Light,
                 fontFamily = FontFamily.Monospace,
                 fontSize = 12.sp,
@@ -175,21 +153,24 @@ private fun CreditCardFrontSide(
             )
 
             Text(
-                modifier = Modifier.constrainAs(lExpiration) {
-                    end.linkTo(parent.end, margin = 60.dp)
-                    centerVerticallyTo(lHolderName)
-                },
+                modifier = Modifier
+                    .constrainAs(lExpiration) {
+                        end.linkTo(parent.end, margin = 60.dp)
+                        centerVerticallyTo(lHolderName)
+                    },
                 fontSize = 12.sp,
                 color = Color.White,
                 text = "EXP"
             )
 
             Text(
-                modifier = Modifier.constrainAs(lExpirationDate) {
-                    start.linkTo(lExpiration.end, margin = 10.dp)
-                    end.linkTo(parent.end, margin = cardPadding)
-                    centerVerticallyTo(lExpiration)
-                },
+                modifier = Modifier
+                    .constrainAs(lExpirationDate) {
+                        start.linkTo(lExpiration.end, margin = 10.dp)
+                        end.linkTo(parent.end, margin = cardPadding)
+                        centerVerticallyTo(lExpiration)
+                    }
+                    .testTag("lExpirationDate"),
                 fontWeight = FontWeight.Light,
                 fontFamily = FontFamily.Monospace,
                 fontSize = 12.sp,
@@ -285,14 +266,14 @@ private fun CreditCardBackSide(
 }
 
 @Composable
-private fun CardNumberBlock(block: String, modifier: Modifier) {
+private fun CardNumberBlock(cardNumber: CardNumberParser, modifier: Modifier) {
     Text(
         modifier = modifier,
         fontWeight = FontWeight.Light,
         fontFamily = FontFamily.Monospace,
         fontSize = 25.sp,
         color = Color.White,
-        text = block
+        text = "${cardNumber.first} ${cardNumber.second} ${cardNumber.third} ${cardNumber.fourth}"
     )
 }
 
