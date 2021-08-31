@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,10 +41,12 @@ fun CustomTextFieldDeleteIcon(
                 .clip(CircleShape)
                 .background(Color.LightGray)
                 .clickable { onClick() }
+                .testTag("deleteIconContainer")
         ) {
             Icon(
                 modifier = Modifier
-                    .padding(5.dp),
+                    .padding(5.dp)
+                    .testTag("deleteIcon"),
                 painter = painterResource(id = R.drawable.ic_baseline_close_24),
                 contentDescription = null
             )
