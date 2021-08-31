@@ -3,7 +3,7 @@ package com.emenjivar.creditcard.utils
 import org.junit.Assert
 import org.junit.Test
 
-class CardInputValidatorTest {
+class InputValidatorTest {
 
     @Test
     fun `parseNumber when input is valid, should return the same input`() {
@@ -11,7 +11,7 @@ class CardInputValidatorTest {
         val creditCardNumber = "1234"
 
         // Then verify the output is the same as the input
-        Assert.assertEquals(creditCardNumber, CardInputValidator.parseNumber(creditCardNumber))
+        Assert.assertEquals(creditCardNumber, InputValidator.parseNumber(creditCardNumber))
     }
 
     @Test
@@ -20,7 +20,7 @@ class CardInputValidatorTest {
         val creditCardNumber = ""
 
         // Then verify the output is an empty string
-        Assert.assertEquals("", CardInputValidator.parseNumber(creditCardNumber))
+        Assert.assertEquals("", InputValidator.parseNumber(creditCardNumber))
     }
 
     @Test
@@ -29,7 +29,7 @@ class CardInputValidatorTest {
         val creditCardNumber = "1234a"
 
         // Then verify that the output is null
-        Assert.assertNull(CardInputValidator.parseNumber(creditCardNumber))
+        Assert.assertNull(InputValidator.parseNumber(creditCardNumber))
     }
 
     @Test
@@ -38,7 +38,7 @@ class CardInputValidatorTest {
         val holderName = "carlos menjivar"
 
         // Then verify the output is the same as the input
-        Assert.assertEquals(holderName, CardInputValidator.parseHolderName(holderName))
+        Assert.assertEquals(holderName, InputValidator.parseHolderName(holderName))
     }
 
     @Test
@@ -47,7 +47,7 @@ class CardInputValidatorTest {
         val holderName = ""
 
         // Then verify the output is an empty string
-        Assert.assertEquals("", CardInputValidator.parseHolderName(holderName))
+        Assert.assertEquals("", InputValidator.parseHolderName(holderName))
     }
 
     @Test
@@ -56,7 +56,7 @@ class CardInputValidatorTest {
         val holderName = "carlo$"
 
         // Then verify that the output is null
-        Assert.assertNull(CardInputValidator.parseHolderName(holderName))
+        Assert.assertNull(InputValidator.parseHolderName(holderName))
     }
 
     @Test
@@ -65,7 +65,7 @@ class CardInputValidatorTest {
         val cvc = "192"
 
         // Then verify the output is the same as the input
-        Assert.assertEquals(cvc, CardInputValidator.parseCVC(cvc))
+        Assert.assertEquals(cvc, InputValidator.parseCVC(cvc))
     }
 
     @Test
@@ -74,7 +74,7 @@ class CardInputValidatorTest {
         val cvc = ""
 
         // Then verify the output is an empty string
-        Assert.assertEquals("", CardInputValidator.parseCVC(cvc))
+        Assert.assertEquals("", InputValidator.parseCVC(cvc))
     }
 
     @Test
@@ -83,6 +83,6 @@ class CardInputValidatorTest {
         val cvc = "12a"
 
         // Then verify that the output is null
-        Assert.assertNull(CardInputValidator.parseCVC(cvc))
+        Assert.assertNull(InputValidator.parseCVC(cvc))
     }
 }

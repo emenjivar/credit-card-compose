@@ -1,93 +1,23 @@
 package com.emenjivar.creditcard.component
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.emenjivar.creditcard.R
-import com.emenjivar.creditcard.utils.CardInputValidator
 import com.emenjivar.creditcard.utils.FieldType
 import com.emenjivar.creditcard.utils.InputTransformation
+import com.emenjivar.creditcard.utils.InputValidator
 import com.emenjivar.creditcard.viewmodel.CreditCardViewModel
 
-@Composable
-private fun CustomTextField(
-    modifier: Modifier,
-    value: String,
-    onValueChange: (String) -> Unit = {},
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    nextFocus: FocusRequester? = null,
-    label: String,
-    trailingIcon: @Composable (() -> Unit)? = null
-) {
-    val keyboardOptions = KeyboardOptions(
-        keyboardType = keyboardType,
-        imeAction = if (nextFocus != null) ImeAction.Next else ImeAction.Done
-    )
-
-    TextField(
-        value = value,
-        onValueChange = { onValueChange(it) },
-        visualTransformation = visualTransformation,
-        modifier = modifier,
-        label = { Text(text = label) },
-        trailingIcon = trailingIcon,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = KeyboardActions(
-            onNext = {
-                nextFocus?.requestFocus()
-            }
-        )
-    )
-}
-
-/**
- * Delete icon placed on the right of the field
- * This component is rendered when the value of the input is not blank
- */
-@Composable
-private fun CustomTextFieldDeleteIcon(
-    value: String,
-    onClick: () -> Unit
-) {
-    if (value.isNotBlank()) {
-        Box(
-            modifier = Modifier
-                .height(30.dp)
-                .padding(2.dp)
-                .clip(CircleShape)
-                .background(Color.LightGray)
-                .clickable { onClick() }
-        ) {
-            Icon(
-                modifier = Modifier
-                    .padding(5.dp),
-                painter = painterResource(id = R.drawable.ic_baseline_close_24),
-                contentDescription = null
-            )
-        }
-    }
-}
 
 /**
  * @param viewModel is defined in this project, this value should be sync with CreditCard(...) parameters
@@ -136,7 +66,7 @@ fun CreditCardForm(
             value = viewModel.name,
             label = "Name of card",
             onValueChange = {
-                CardInputValidator.parseHolderName(it)?.let { name ->
+                InputValidator.parseHolderName(it)?.let { name ->
                     viewModel.name = name
                 }
             },
@@ -184,7 +114,7 @@ fun CreditCardForm(
                 value = viewModel.cvc,
                 label = "CVC",
                 onValueChange = {
-                    CardInputValidator.parseCVC(it)?.let { cvc ->
+                    InputValidator.parseCVC(it)?.let { cvc ->
                         viewModel.cvc = cvc
                     }
                 },

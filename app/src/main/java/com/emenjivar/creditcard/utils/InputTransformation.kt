@@ -5,6 +5,9 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
+/**
+ * Apply mask on edittext
+ */
 class InputTransformation(private val fieldType: FieldType) : VisualTransformation {
 
     override fun filter(text: AnnotatedString): TransformedText = when(fieldType) {

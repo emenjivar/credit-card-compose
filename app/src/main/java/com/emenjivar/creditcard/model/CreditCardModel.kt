@@ -1,7 +1,7 @@
 package com.emenjivar.creditcard.model
 
 import com.emenjivar.creditcard.R
-import com.emenjivar.creditcard.utils.CardIssuerFinder
+import com.emenjivar.creditcard.utils.IssuerFinder
 
 data class CreditCardModel(
     var number: String = "",
@@ -10,7 +10,7 @@ data class CreditCardModel(
     var cvc: String = "000",
     var cardEntity: String = "VISA"
 ) {
-    val logoCardIssuer = when(CardIssuerFinder.detect(number)) {
+    val logoCardIssuer = when(IssuerFinder.detect(number)) {
         CardIssuer.VISA -> R.drawable.logo_visa
         CardIssuer.MASTERCARD -> R.drawable.logo_mastercard
         CardIssuer.AMERICAN_EXPRESS -> R.drawable.ic_baseline_credit_card_24

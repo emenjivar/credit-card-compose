@@ -6,7 +6,7 @@ import com.emenjivar.creditcard.model.CardIssuer
  * identify the issuer of credit card using the following table
  * https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)
  */
-class CardIssuerFinder {
+class IssuerFinder {
 
     companion object {
         fun detect(number: String): CardIssuer = when {

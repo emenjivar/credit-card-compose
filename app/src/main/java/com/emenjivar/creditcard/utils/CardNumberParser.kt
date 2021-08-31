@@ -1,5 +1,8 @@
 package com.emenjivar.creditcard.utils
 
+/**
+ * Parse credit card number, split it on blocks
+ */
 class CardNumberParser(
     private val number: String,
     private val emptyChar: Char = DEFAULT_EMPTY_CHAR

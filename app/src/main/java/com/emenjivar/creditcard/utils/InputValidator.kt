@@ -1,6 +1,6 @@
 package com.emenjivar.creditcard.utils
 
-class CardInputValidator {
+class InputValidator {
 
     companion object {
         fun parseNumber(number: String): String? = when {

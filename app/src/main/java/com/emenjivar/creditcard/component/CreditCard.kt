@@ -11,8 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.Placeable
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -24,41 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.emenjivar.creditcard.R
+import com.emenjivar.creditcard.ext.dynamicCardHeight
 import com.emenjivar.creditcard.model.CreditCardModel
 import com.emenjivar.creditcard.utils.CardNumberParser
-
-/**
- * Provides rectangular size to the card
- * This percent is calculated using the real size of a credit card: 85.6mm x 53.98mm
- * Height layout is 63.06% of width
- */
-private fun Modifier.dynamicCardHeight() = this.then(
-    layout { measurable, constraints ->
-        var placeable: Placeable
-
-        measurable.measure(constraints).apply {
-            placeable = measurable.measure(
-                constraints.copy(
-                    minWidth = width,
-                    maxWidth = width,
-                    minHeight = (width * 0.6306).toInt(),
-                    maxHeight = (width * 0.6306).toInt()
-                )
-            )
-        }
-
-        layout(
-            width = placeable.width,
-            height = placeable.height
-        ) {
-            placeable.place(
-                x = 0,
-                y = 0,
-                zIndex = 0f
-            )
-        }
-    }
-)
 
 @Composable
 private fun CreditCardContainer(
