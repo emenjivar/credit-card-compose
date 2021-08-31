@@ -1,7 +1,8 @@
 package com.emenjivar.creditcard
 
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import com.emenjivar.creditcard.component.CreditCard
 import org.junit.Rule
 import org.junit.Test
@@ -131,6 +132,95 @@ class CreditCardTest {
 
         composeTestRule
             .onNodeWithTag("iCardEntity")
+            .assertDoesNotExist()
+    }
+
+    @Test
+    fun creditCardBackSide_displayed_data() {
+        // Having a valid credit card number
+        val cardNumber = "4000100020003000"
+        val cvc = "571"
+
+        composeTestRule.setContent {
+            CreditCard(
+                number = cardNumber,
+                expiration = "",
+                holderName = "",
+                cvc = cvc,
+                flipped = true
+            )
+        }
+
+        // Then verify the last block of card number is displayed
+        composeTestRule
+            .onNodeWithTag("cardNumberSignature")
+            .assertTextEquals("3000")
+
+        // Also verify the cvc number is masked using *
+        composeTestRule
+            .onNodeWithTag("cvc")
+            .assertTextEquals("***")
+    }
+
+    @Test
+    fun creditCardBackSide_not_hidden_cvc() {
+        // having a normal cvc
+        val cvc = "571"
+
+        composeTestRule.setContent {
+            CreditCard(
+                number = "",
+                expiration = "",
+                holderName = "",
+                cvc = cvc,
+                flipped = true,
+                showSecurityCode = true
+            )
+        }
+
+        // Then verify the cvc field is equals that the parameter
+        composeTestRule
+            .onNodeWithTag("cvc")
+            .assertTextEquals(cvc)
+    }
+
+    @Test
+    fun creditCardBackSide_card_issuer_image_displayed() {
+        // Having a valid visa number
+        val number = "4000111122223333"
+
+        composeTestRule.setContent {
+            CreditCard(
+                number = number,
+                expiration = "",
+                holderName = "",
+                cvc = "",
+                flipped = true
+            )
+        }
+
+        composeTestRule
+            .onNodeWithTag("cardIssuer")
+            .assertExists()
+    }
+
+    @Test
+    fun creditCardBackSide_card_issuer_image_not_displayed() {
+        // Having a valid visa number
+        val number = "0000000000000000"
+
+        composeTestRule.setContent {
+            CreditCard(
+                number = number,
+                expiration = "",
+                holderName = "",
+                cvc = "",
+                flipped = true
+            )
+        }
+
+        composeTestRule
+            .onNodeWithTag("cardIssuer")
             .assertDoesNotExist()
     }
 }

@@ -34,7 +34,8 @@ private fun CreditCardContainer(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .dynamicCardHeight(),
+            .dynamicCardHeight()
+            .testTag("creditCardContainer"),
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.credit_card_round_corner)),
         backgroundColor = backgroundColor
     ) {
@@ -189,7 +190,8 @@ private fun CreditCardBackSide(
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.Center)
-                        .padding(end = 5.dp),
+                        .padding(end = 5.dp)
+                        .testTag("cardNumberSignature"),
                     textAlign = TextAlign.End,
                     text = cardNumber.fourth
                 )
@@ -208,7 +210,8 @@ private fun CreditCardBackSide(
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.Center),
+                        .align(Alignment.Center)
+                        .testTag("cvc"),
                     textAlign = TextAlign.Center,
                     text = if (showSecurityCode) model.cvc else "*".repeat(model.cvc.length)
                 )
@@ -221,7 +224,8 @@ private fun CreditCardBackSide(
                             end.linkTo(parent.end, margin = 8.dp)
                             bottom.linkTo(parent.bottom, margin = 8.dp)
                         }
-                        .width(60.dp),
+                        .width(60.dp)
+                        .testTag("cardIssuer"),
                     contentScale = ContentScale.Fit,
                     painter = painterResource(id = safeLogoIssuer),
                     contentDescription = null,
