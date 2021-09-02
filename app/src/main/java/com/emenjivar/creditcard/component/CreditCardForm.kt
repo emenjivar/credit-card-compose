@@ -10,6 +10,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,7 +37,8 @@ fun CreditCardForm(
                 .fillMaxWidth()
                 .onFocusChanged { state ->
                     if (state.isFocused) viewModel.flipped = false
-                },
+                }
+                .testTag("tCardNumber"),
             value = viewModel.number,
             label = "Number of card",
             visualTransformation = InputTransformation(FieldType.CARD_NUMBER),
@@ -62,7 +64,8 @@ fun CreditCardForm(
                 .onFocusChanged { state ->
                     if (state.isFocused) viewModel.flipped = false
                 }
-                .focusRequester(focusHolderName),
+                .focusRequester(focusHolderName)
+                .testTag("tCardHolder"),
             value = viewModel.name,
             label = "Name of card",
             onValueChange = {
@@ -85,7 +88,8 @@ fun CreditCardForm(
                     .onFocusEvent { state ->
                         if (state.isFocused) viewModel.flipped = false
                     }
-                    .focusRequester(focusExpiration),
+                    .focusRequester(focusExpiration)
+                    .testTag("tExpiration"),
                 value = viewModel.expiration,
                 label = "Expiration",
                 visualTransformation = InputTransformation(FieldType.EXPIRATION),
@@ -110,7 +114,8 @@ fun CreditCardForm(
                     .onFocusEvent { state ->
                         if (state.isFocused) viewModel.flipped = true
                     }
-                    .focusRequester(focusCVC),
+                    .focusRequester(focusCVC)
+                    .testTag("tSecurityCode"),
                 value = viewModel.cvc,
                 label = "CVC",
                 onValueChange = {
