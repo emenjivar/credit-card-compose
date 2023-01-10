@@ -37,7 +37,7 @@ class InputTransformation(private val fieldType: FieldType) : VisualTransformati
 
             override fun transformedToOriginal(offset: Int): Int {
                 if(offset <= 2) return offset
-                if(offset <= 5) return offset + 1
+                if(offset <= 5) return offset - 1
                 return 4
             }
         }
