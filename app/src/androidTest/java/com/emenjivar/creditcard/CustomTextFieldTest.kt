@@ -5,7 +5,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.performImeAction
+import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.emenjivar.creditcard.component.CustomTextField
 import com.emenjivar.creditcard.component.CustomTextFieldDeleteIcon
