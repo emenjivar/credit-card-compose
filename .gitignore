@@ -89,3 +89,5 @@ lint/tmp/
 *.hprof
 .idea/misc.xml
 .idea/inspectionProfiles/
+
+local.properties
